@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Zoomarket</title>
+
+    <!-- Оставляем стандартный Bootstrap (пригодится для форм и таблиц в админке) -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Подключаем НАШ новый CSS (он перебьет стандартные стили Bootstrap) -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!-- Блок для дополнительных стилей конкретной страницы -->
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <!-- 1. ПОДКЛЮЧАЕМ ШАПКУ (из файла _Header.cshtml) -->
+    <partial name="_Header" />
+
+    <!-- 2. ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ -->
+    <!-- (убрали стандартный container, чтобы наш дизайн был на всю ширину экрана) -->
+    <main class="main-content">
+        @RenderBody()
+    </main>
+
+    <!-- 3. ПОДКЛЮЧАЕМ ПОДВАЛ (из файла _Footer.cshtml) -->
+    <partial name="_Footer" />
+
+    <!-- Стандартные скрипты Visual Studio -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/slider.js" asp-append-version="true"></script>
+
+
+    <!-- Блок для скриптов конкретной страницы -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

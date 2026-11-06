@@ -1,0 +1,514 @@
+/* =========================================
+   1. ОБЩИЕ СТИЛИ И СБРОС
+   ========================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #0f172a;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+}
+
+/* =========================================
+   2. ШАПКА (HEADER) - Плавающая и закругленная
+   ========================================= */
+.site-header {
+    position: sticky;
+    top: 20px; /* Отступ от верхнего края экрана */
+    z-index: 1000;
+    max-width: 1200px;
+    margin: 0 auto; /* Центрируем по горизонтали */
+    padding: 0 20px;
+    width: 100%;
+}
+
+.header-container {
+    background-color: rgba(30, 41, 59, 0.85); /* Полупрозрачный фон */
+    backdrop-filter: blur(15px); /* Эффект матового стекла */
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px; /* Сильное закругление (форма таблетки) */
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Тень для объема */
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #f8fafc;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+}
+
+    .logo:hover {
+        color: #38bdf8;
+    }
+
+.logo-icon {
+    font-size: 1.8rem;
+}
+
+.main-nav {
+    display: flex;
+    gap: 30px;
+}
+
+    .main-nav a {
+        color: #cbd5e1;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+        position: relative;
+    }
+
+        .main-nav a:hover {
+            color: #38bdf8;
+        }
+
+        /* Красивое подчеркивание при наведении на ссылки */
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #38bdf8;
+            transition: width 0.3s ease;
+        }
+
+        .main-nav a:hover::after {
+            width: 100%;
+        }
+
+/* =========================================
+   3. СЛАЙДЕР (HERO)
+   ========================================= */
+.hero-slider {
+    position: relative;
+    height: 85vh; /* Крупный слайдер */
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+    margin-top: -80px; /* Отрицательный отступ, чтобы слайдер заходил под шапку */
+}
+
+.slides-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .slide.active {
+        opacity: 1;
+    }
+
+    /* Затемнение картинки, чтобы текст читался */
+    .slide::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.6);
+        z-index: 1;
+    }
+
+.slide-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+    padding: 0 20px;
+    transform: translateY(20px);
+    transition: transform 0.8s ease;
+    margin-top: 80px; /* Компенсируем отрицательный отступ шапки */
+}
+
+.slide.active .slide-content {
+    transform: translateY(0);
+}
+
+.slide-content h1 {
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.slide-content p {
+    font-size: 1.5rem;
+    color: #cbd5e1;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Кнопки слайдера */
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+    .slider-arrow:hover {
+        background: rgba(56, 189, 248, 0.8);
+    }
+
+.prev {
+    left: 30px;
+}
+
+.next {
+    right: 30px;
+}
+
+/* Точки внизу */
+.slider-dots {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+    .dot.active {
+        background: #38bdf8;
+        transform: scale(1.3);
+    }
+
+/* =========================================
+   4. КНОПКИ
+   ========================================= */
+.btn-primary {
+    display: inline-block;
+    padding: 18px 45px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+    }
+
+.btn-outline {
+    display: inline-block;
+    padding: 16px 45px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #38bdf8;
+    background: transparent;
+    border: 2px solid #38bdf8;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline:hover {
+        background: #38bdf8;
+        color: #0f172a;
+    }
+
+/* =========================================
+   5. ПРЕИМУЩЕСТВА (ЧЕЛОВЕЧЕСКИЙ ДИЗАЙН)
+   ========================================= */
+.features-human {
+    padding: 120px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #0f172a;
+}
+
+.features-text {
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+    .features-text h2 {
+        font-size: 3rem;
+        color: #f8fafc;
+        margin-bottom: 20px;
+    }
+
+    .features-text p {
+        font-size: 1.3rem;
+        color: #94a3b8;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+.human-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.h-card {
+    background: #1e293b;
+    padding: 50px 30px;
+    border-radius: 30px;
+    text-align: center;
+    border: 1px solid #334155;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+    .h-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        border-color: #38bdf8;
+    }
+
+.h-icon {
+    font-size: 4rem;
+    margin-bottom: 25px;
+}
+
+.h-card h3 {
+    font-size: 1.8rem;
+    color: #f8fafc;
+    margin-bottom: 15px;
+}
+
+.h-card p {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+/* =========================================
+   6. CTA БЛОК
+   ========================================= */
+.cta-human {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    padding: 100px 20px;
+    text-align: center;
+    border-top: 1px solid #334155;
+}
+
+.cta-inner {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+    .cta-inner h2 {
+        font-size: 3rem;
+        color: #f8fafc;
+        margin-bottom: 20px;
+    }
+
+    .cta-inner p {
+        font-size: 1.3rem;
+        color: #94a3b8;
+        margin-bottom: 40px;
+    }
+
+    .cta-inner strong {
+        color: #38bdf8;
+        font-size: 1.5rem;
+    }
+
+/* =========================================
+   7. ПОДВАЛ (FOOTER)
+   ========================================= */
+.site-footer {
+    background-color: #0b1120;
+    border-top: 1px solid #1e293b;
+    padding-top: 60px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 40px 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.footer-info, .footer-links, .footer-contact {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-container h3, .footer-container h4 {
+    color: #f8fafc;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.footer-container p, .footer-container ul {
+    color: #94a3b8;
+    line-height: 1.8;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    .footer-links a:hover {
+        color: #38bdf8;
+    }
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px;
+    background-color: #070a13;
+    color: #64748b;
+    border-top: 1px solid #1e293b;
+}
+
+/* =========================================
+   8. АНИМАЦИИ
+   ========================================= */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   9. АДАПТИВНОСТЬ (ДЛЯ ТЕЛЕФОНОВ)
+   ========================================= */
+@media (max-width: 992px) {
+    .slide-content h1 {
+        font-size: 3.5rem;
+    }
+
+    .slide-content p {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-slider {
+        height: 70vh;
+        margin-top: 0;
+    }
+
+    .slide-content {
+        margin-top: 0;
+    }
+
+        .slide-content h1 {
+            font-size: 2.5rem;
+        }
+
+    .slider-arrow {
+        display: none;
+    }
+
+    .features-text h2, .cta-inner h2 {
+        font-size: 2rem;
+    }
+
+    /* Адаптация шапки */
+    .header-container {
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 30px;
+    }
+
+    .main-nav {
+        margin-top: 15px;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Адаптация подвала */
+    .footer-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
