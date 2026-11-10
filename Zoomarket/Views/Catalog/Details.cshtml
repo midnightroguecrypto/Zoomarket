@@ -1,0 +1,103 @@
+﻿@model Zoomarket.Models.Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/product-details.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/catalog.css" asp-append-version="true" />
+}
+
+<div class="product-details-container">
+    <!-- Левая часть: Картинка -->
+    <div class="product-gallery">
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="main-image">
+        }
+        else
+        {
+            <div class="no-image">Нет фото</div>
+        }
+    </div>
+
+    <!-- Правая часть: Информация -->
+    <div class="product-info-details">
+        <nav class="breadcrumbs">
+            <a asp-controller="Home" asp-action="Index">Главная</a> /
+            <a asp-controller="Catalog" asp-action="Index">Каталог</a> /
+            <span>@Model.Name</span>
+        </nav>
+
+        <h1>@Model.Name</h1>
+
+        <div class="product-meta">
+            <span class="brand">Бренд: <strong>@Model.Brand</strong></span>
+            <span class="category">Категория: <strong>@Model.Category?.Name</strong></span>
+        </div>
+
+        <div class="product-price-block">
+            @if (Model.OldPrice.HasValue)
+            {
+                <span class="old-price-large">@Model.OldPrice.Value.ToString("N0") ₽</span>
+            }
+            <span class="new-price-large">@Model.Price.ToString("N0") ₽</span>
+        </div>
+        <div class="product-specs">
+            <h3>Характеристики</h3>
+            <ul>
+                <li><strong>Бренд:</strong> @Model.Brand</li>
+                <li><strong>Категория:</strong> @Model.Category?.Name</li>
+                <li><strong>Наличие:</strong> <span style="color: green;">В наличии</span></li>
+                <li><strong>Артикул:</strong> @Model.Id</li>
+            </ul>
+        </div>
+        <p class="product-description">@Model.ShortDescription</p>
+
+        <div class="product-actions">
+            <form asp-controller="Cart" asp-action="Add" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn-primary btn-buy">Добавить в корзину</button>
+            </form>
+        </div>
+    </div>
+</div>
+@{
+    var related = ViewBag.RelatedProducts as List<Zoomarket.Models.Product>;
+}
+
+@if (related != null && related.Any())
+{
+    <section class="related-products-section">
+        <div class="related-header">
+            <h2>Похожие товары</h2>
+        </div>
+
+        <div class="related-slider-wrapper">
+            <button class="related-btn prev" onclick="scrollRelated(-1)">&#10094;</button>
+
+            <div class="related-track" id="related-track">
+                @foreach (var item in related)
+                {
+                    <div class="related-card">
+                        <partial name="_ProductCard" model="item" />
+                    </div>
+                }
+            </div>
+
+            <button class="related-btn next" onclick="scrollRelated(1)">&#10095;</button>
+        </div>
+    </section>
+}
+
+@section Scripts {
+    <script>
+        function scrollRelated(direction) {
+            const track = document.getElementById('related-track');
+            if (track) {
+                // Прокрутка на ширину одной карточки (260px + 20px отступ)
+                track.scrollBy({ left: direction * 280, behavior: 'smooth' });
+            }
+        }
+    </script>
+}

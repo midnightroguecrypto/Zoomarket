@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Zoomarket.Models.Brand>
+@{
+    ViewData["Title"] = "Бренды";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/brands.css" asp-append-version="true" />
+}
+
+<section class="brands-hero">
+    <div class="hero-content">
+        <h1>Наши бренды</h1>
+        <p>Только проверенные производители зоотоваров</p>
+
+        <!-- Декоративные элементы (лапки на фоне) -->
+        <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
+        <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
+    </div>
+
+    <!-- Иллюстрация животного (сова) -->
+    <div class="hero-image">
+        <img src="~/img/free-icon-linux-2333464.png" alt="Сова" />
+    </div>
+</section>
+
+<div class="brands-container">
+    <div class="brands-masonry">
+        @foreach (var brand in Model)
+        {
+            <a asp-action="Products" asp-route-brandName="@brand.Name" class="brand-card">
+                <div class="brand-logo-wrapper">
+                    @if (!string.IsNullOrEmpty(brand.LogoUrl))
+                    {
+                        <img src="@brand.LogoUrl" alt="@brand.Name" onerror="this.style.display='none'; this.parentElement.innerHTML = '<i class=\'fa-solid fa-crown\' style=\'font-size: 3rem; color: var(--primary-color);\'></i>';">
+                    }
+                    else
+                    {
+                        <i class="fa-solid fa-crown" style="font-size: 3rem; color: var(--primary-color);"></i>
+                    }
+                </div>
+                <div class="brand-info">
+                    <h3>@brand.Name</h3>
+                    @if (!string.IsNullOrEmpty(brand.Description))
+                    {
+                        <p class="brand-desc">@brand.Description</p>
+                    }
+                    <span class="brand-link">Смотреть товары <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </a>
+        }
+    </div>
+</div>

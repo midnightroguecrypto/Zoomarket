@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Zoomarket.Models.Product>
+@{
+    ViewData["Title"] = "Новинки";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/new-arrivals.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/catalog.css" asp-append-version="true" />
+}
+
+<section class="new-hero">
+    
+    <div class="hero-image">
+        <img src="~/img/free-icon-pet-3199867.png" alt="Кролик" />
+    </div>
+
+    
+    <div class="hero-content">
+        <h1>Новинки</h1>
+        <p>Самые свежие поступления в нашем магазине</p>
+
+       
+        <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
+        <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
+        
+    </div>
+</section>
+
+@if (!Model.Any())
+{
+    <p style="text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-top: 50px;">За последние 14 дней новинок не появилось. Заходите позже!</p>
+}
+else
+{
+    <div class="products-grid">
+        @foreach (var product in Model)
+        {
+            <partial name="_ProductCard" model="product" />
+        }
+    </div>
+}

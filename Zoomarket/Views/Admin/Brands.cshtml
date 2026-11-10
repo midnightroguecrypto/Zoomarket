@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Zoomarket.Models.Brand>
+@{
+    ViewData["Title"] = "Управление брендами";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+<div class="admin-container">
+    <a asp-action="Index" class="btn-back-admin">
+        <i class="fa-solid fa-arrow-left"></i> Назад в админку
+    </a>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Бренды</h1>
+        <button class="btn-primary" onclick="openBrandModal(0, '', '', '')"><i class="fa-solid fa-plus"></i> Добавить бренд</button>
+    </div>
+
+    @if (TempData["AdminMessage"] != null)
+    {
+        <div class="profile-alert success" style="margin-bottom: 20px; padding: 15px; background: #d4edda; color: #155724; border-radius: 8px;">@TempData["AdminMessage"]</div>
+    }
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Логотип</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var brand in Model)
+            {
+                <tr>
+                    <td><img src="@brand.LogoUrl" style="width: 50px; height: 50px; object-fit: contain; border-radius: 8px; background: #f8f9fa;"></td>
+                    <td>@brand.Name</td>
+                    <td>@brand.Description</td>
+                    <td style="display: flex; gap: 10px;">
+                        <button class="btn-primary" style="padding: 5px 10px; font-size: 0.85rem;" onclick="openBrandModal(@brand.Id, '@brand.Name', '@brand.Description', '@brand.LogoUrl')">Изменить</button>
+                        <form asp-action="DeleteBrand" asp-route-id="@brand.Id" method="post" onsubmit="return confirm('Удалить бренд?');">
+                            <button type="submit" class="btn-danger-admin" style="padding: 5px 10px; font-size: 0.85rem;">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="custom-modal-overlay" id="brandModal" style="display: none;">
+    <div class="custom-modal" style="max-width: 500px; text-align: left;">
+        <h3 id="brandModalTitle">Добавить бренд</h3>
+        <form asp-action="SaveBrand" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="Id" id="brandId" value="0" />
+            <input type="hidden" name="LogoUrl" id="brandLogoUrl" value="" />
+            <div class="form-group">
+                <label>Название бренда</label>
+                <input name="Name" id="brandName" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea name="Description" id="brandDesc" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Логотип</label>
+                <input type="file" name="logoFile" class="form-control" accept="image/*" />
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="closeModal('brandModal')" class="btn-outline" style="flex: 1;">Отмена</button>
+                <button type="submit" class="btn-primary" style="flex: 1;">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openBrandModal(id, name, desc, logoUrl) {
+            document.getElementById('brandModalTitle').innerText = id === 0 ? 'Добавить бренд' : 'Редактировать бренд';
+            document.getElementById('brandId').value = id;
+            document.getElementById('brandName').value = name;
+            document.getElementById('brandDesc').value = desc;
+            document.getElementById('brandLogoUrl').value = logoUrl;
+            document.getElementById('brandModal').style.display = 'flex';
+        }
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+    </script>
+}

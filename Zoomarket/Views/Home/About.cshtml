@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "О магазине";
+}
+
+<section class="about-hero">
+    <!-- Иллюстрация животного (слева) -->
+    <div class="hero-image">
+        <img src="~/img/free-icon-animal-shelter-8183266.png" alt="Собака" />
+    </div>
+
+    <!-- Текст (справа) -->
+    <div class="hero-content">
+        <h1>О магазине WarmPaw</h1>
+        <p>Мы делаем жизнь питомцев счастливее с 2020 года</p>
+
+        <!-- Декоративные элементы (лапки на фоне) -->
+        <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
+        <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
+    </div>
+</section>
+
+<section class="about-content">
+    <div class="about-text">
+        <h2>Наша миссия</h2>
+        <p>Мы верим, что каждый питомец заслуживает самого лучшего. Наша цель — предоставить владельцам удобный доступ к качественным товарам, кормам и аксессуарам, чтобы забота о любимцах приносила только радость.</p>
+        
+        <h2>Наши преимущества</h2>
+        <ul class="about-list">
+            <li><i class="fa-solid fa-circle-check"></i> Только проверенные бренды и сертифицированные товары.</li>
+            <li><i class="fa-solid fa-circle-check"></i> Быстрая доставка по всей России.</li>
+            <li><i class="fa-solid fa-circle-check"></i> Опытные консультанты-ветеринары.</li>
+            <li><i class="fa-solid fa-circle-check"></i> Гибкая система скидок и бонусов для постоянных клиентов.</li>
+        </ul>
+    </div>
+    
+    <div class="about-image">
+        <!-- Заглушка с картинкой (можно заменить на свою) -->
+        <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?q=80&w=1000&auto=format&fit=crop" alt="О нас">
+    </div>
+</section>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+}

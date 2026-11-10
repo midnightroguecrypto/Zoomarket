@@ -1,0 +1,33 @@
+﻿@model Zoomarket.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Вход";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+}
+
+<section class="auth-section">
+    <div class="auth-container">
+        <h2>Вход в личный кабинет</h2>
+        <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="your@email.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" placeholder="********" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group checkbox-group">
+                <input asp-for="RememberMe" />
+                <label asp-for="RememberMe"></label>
+            </div>
+            <button type="submit" class="btn-primary w-100">Войти</button>
+            <p class="auth-link">Нет аккаунта? <a asp-action="Register">Зарегистрироваться</a></p>
+        </form>
+    </div>
+</section>

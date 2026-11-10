@@ -1,0 +1,363 @@
+﻿/* =========================================
+   СТИЛИ ДЛЯ СТРАНИЦЫ БРЕНДОВ (BENTO GRID)
+   ========================================= */
+.brands-container {
+    max-width: 1250px;
+    margin: 40px auto 80px;
+    padding: 0 20px;
+}
+
+/* Сетка-мозаика */
+.brands-masonry {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+    gap: 20px;
+    grid-auto-rows: minmax(240px, auto); /* Высота подстраивается под контент */
+    grid-auto-flow: dense; /* Заполняет пустоты */
+}
+
+/* =========================================
+   БАЗОВАЯ КАРТОЧКА
+   ========================================= */
+.brand-card {
+    border-radius: 24px;
+    padding: 25px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border: 1px solid transparent;
+    height: 100%;
+}
+
+    .brand-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        border-color: var(--primary-color);
+        z-index: 2;
+    }
+
+    /* Чередование цветов (каждая четная - зеленоватая) */
+    .brand-card:nth-child(even) {
+        background: linear-gradient(135deg, #f0f7f2 0%, #e2ede5 100%);
+    }
+
+    /* =========================================
+   ПАТТЕРН РАЗМЕРОВ (ГИБКИЙ)
+   ========================================= */
+
+    /* Первая карточка - большая и темная (акцент) */
+    .brand-card:nth-child(1) {
+        grid-column: span 2;
+        background: var(--secondary-color);
+        color: #fff;
+    }
+
+        .brand-card:nth-child(1) h3 {
+            color: #fff;
+            font-size: 2rem;
+        }
+
+        .brand-card:nth-child(1) .brand-desc {
+            color: #c4b8b0;
+        }
+
+        .brand-card:nth-child(1) .brand-link {
+            color: var(--accent-light);
+        }
+
+        .brand-card:nth-child(1) .brand-logo-wrapper {
+            background: #fff;
+            width: 100px;
+            height: 100px;
+        }
+
+    /* Каждая 3-я карточка (3, 6, 9...) - ШИРОКАЯ (на 2 колонки) */
+    .brand-card:nth-child(3n) {
+        grid-column: span 2;
+    }
+
+    /* Если последняя карточка не заполняет ряд, растягиваем её на всю ширину */
+    .brand-card:last-child {
+        grid-column: span 3;
+    }
+
+        /* Ограничиваем ширину текста в широких карточках, чтобы был "воздух" */
+        .brand-card:nth-child(1) .brand-info,
+        .brand-card:nth-child(3n) .brand-info,
+        .brand-card:last-child .brand-info {
+            max-width: 60%;
+        }
+
+        /* Для последней карточки (на всю ширину) делаем описание в одну строку */
+        .brand-card:last-child .brand-desc {
+            -webkit-line-clamp: 1;
+        }
+
+/* =========================================
+   ВНУТРЕННИЕ ЭЛЕМЕНТЫ
+   ========================================= */
+.brand-logo-wrapper {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 16px;
+    padding: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+}
+
+.brand-card:hover .brand-logo-wrapper {
+    transform: scale(1.05);
+}
+
+.brand-logo-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.brand-info {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.brand-card h3 {
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+    font-weight: 800;
+}
+
+.brand-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.brand-link {
+    font-size: 0.95rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.brand-card:hover .brand-link i {
+    transform: translateX(5px);
+    transition: transform 0.3s;
+}
+
+/* =========================================
+   АДАПТИВНОСТЬ
+   ========================================= */
+@media (max-width: 992px) {
+    .brands-masonry {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    /* На планшетах широкие карточки занимают всю ширину */
+    .brand-card:nth-child(1),
+    .brand-card:nth-child(3n),
+    .brand-card:last-child {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .brands-masonry {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .brand-card {
+        height: auto;
+        min-height: 200px;
+    }
+        /* Сбрасываем ограничение ширины текста на телефонах */
+        .brand-card:nth-child(1) .brand-info,
+        .brand-card:nth-child(3n) .brand-info,
+        .brand-card:last-child .brand-info {
+            max-width: 100%;
+        }
+}
+/* =========================================
+   КРЕАТИВНЫЙ ЗАГОЛОВОК СТРАНИЦЫ БРЕНДОВ
+   ========================================= */
+.brands-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 20px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    border-radius: 0 0 20px 20px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    max-width: 500px;
+}
+
+    .hero-content h1 {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+/* Иллюстрация */
+.hero-image {
+    position: relative;
+    z-index: 2;
+}
+
+    .hero-image img {
+        max-width: 180px;
+        height: auto;
+        filter: drop-shadow(0 10px 20px rgba(63, 81, 181, 0.2));
+        animation: float 4s ease-in-out infinite;
+    }
+
+/* Декоративные лапки */
+.hero-decor {
+    position: absolute;
+    color: rgba(63, 81, 181, 0.1);
+    z-index: 1;
+}
+
+.paw-1 {
+    top: 20%;
+    left: 10%;
+    font-size: 4rem;
+    transform: rotate(-20deg);
+}
+
+.paw-2 {
+    bottom: 10%;
+    right: 20%;
+    font-size: 5rem;
+    transform: rotate(15deg);
+}
+
+/* Анимация парения */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* --- АДАПТИВНОСТЬ --- */
+@media (max-width: 992px) {
+    .brands-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+    .hero-image img {
+        max-width: 140px;
+        margin-top: 10px;
+    }
+
+    .hero-decor {
+        display: none;
+    }
+}
+.brands-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.brand-pill {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    background: transparent;
+    border: 2px solid var(--secondary-color);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+    .brand-pill:hover {
+        background: #e8f0ea;
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .brand-pill.active {
+        background: var(--primary-color);
+        color: #fff;
+        border-color: var(--primary-color);
+    }
+
+/* Кнопка "Все бренды" */
+.btn-all-brands {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--secondary-color);
+    border-radius: 30px;
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    margin-right: 10px;
+}
+
+    .btn-all-brands:hover {
+        background: var(--secondary-color);
+        color: #fff;
+    }

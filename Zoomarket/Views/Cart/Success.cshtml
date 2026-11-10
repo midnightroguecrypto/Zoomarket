@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Заказ оформлен";
+}
+
+<div class="cart-container" style="text-align: center; padding: 80px 20px;">
+    <i class="fa-solid fa-circle-check" style="font-size: 5rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+    <h1 style="color: var(--secondary-color); margin-bottom: 15px;">Спасибо за заказ!</h1>
+    <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;">
+        Ваш заказ <strong>№@ViewBag.OrderId</strong> успешно оформлен. Мы свяжемся с вами для уточнения деталей.
+    </p>
+    <a asp-controller="Home" asp-action="Index" class="btn-primary">На главную</a>
+</div>

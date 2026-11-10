@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+@{
+    ViewData["Title"] = "Управление пользователями";
+    var userRoles = ViewBag.UserRoles as Dictionary<string, string>;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+<div class="admin-container">
+    <a asp-action="Index" class="btn-back-admin">
+        <i class="fa-solid fa-arrow-left"></i> Назад в админку
+    </a>
+    <h1>Управление пользователями</h1>
+
+    @if (TempData["AdminMessage"] != null)
+    {
+        <div class="profile-alert success" style="margin-bottom: 20px; padding: 15px; background: #d4edda; color: #155724; border-radius: 8px;">
+            @TempData["AdminMessage"]
+        </div>
+    }
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Текущая роль</th>
+                <th>Сменить роль</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@(userRoles?.ContainsKey(user.Id) == true ? userRoles[user.Id] : "Нет роли")</td>
+                    <td>
+                        <form asp-action="ChangeRole" method="post" style="display:flex; gap:5px;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <select name="newRole" class="form-control" style="width:auto;">
+                                <option value="User">User</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                            <button type="submit" class="btn-primary" style="padding: 5px 10px;">ОК</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

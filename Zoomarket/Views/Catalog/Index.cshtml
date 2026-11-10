@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Zoomarket.Models.Product>
+@{
+    ViewData["Title"] = "Каталог";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/catalog.css" asp-append-version="true" />
+}
+
+<section class="catalog-hero">
+    <div class="hero-content">
+        <h1>Каталог товаров</h1>
+        <p>Найдите всё, что нужно вашему питомцу</p>
+
+        
+        <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
+        <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
+    </div>
+
+   
+    <div class="hero-image">
+        <img src="~/img/free-icon-cat-food-17440373.png" alt="Котик" />
+    </div>
+</section>
+
+<div class="catalog-container">
+    <!-- Боковая панель с фильтрами -->
+    <aside class="filters-sidebar">
+        <h3>Фильтры</h3>
+        <form method="get" asp-action="Index">
+
+            <div class="filter-group">
+                <label>Поиск по названию</label>
+                <input type="text" name="search" value="@ViewBag.CurrentSearch" placeholder="Корм, игрушка..." class="form-control">
+            </div>
+
+            <div class="filter-group">
+                <label>Категория</label>
+                <select name="categoryId" class="form-control">
+                    <option value="">Все категории</option>
+                    @foreach (var cat in ViewBag.Categories as List<Zoomarket.Models.Category>)
+                    {
+                        <option value="@cat.Id" selected="@(ViewBag.CurrentCategory == cat.Id)">
+                            @cat.Name
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Цена (от и до)</label>
+                <div class="price-inputs">
+                    <input type="number" name="minPrice" value="@ViewBag.CurrentMinPrice" placeholder="0" class="form-control">
+                    <input type="number" name="maxPrice" value="@ViewBag.CurrentMaxPrice" placeholder="10000" class="form-control">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary w-100">Применить</button>
+            <a asp-action="Index" class="btn-outline w-100" style="margin-top:10px; display:block; text-align:center;">Сбросить</a>
+        </form>
+    </aside>
+
+    <!-- Сетка товаров -->
+    <div class="products-area">
+        @if (!Model.Any())
+        {
+            <p style="text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-top: 50px;">По вашему запросу ничего не найдено 😔</p>
+        }
+        else
+        {
+            <div class="products-grid">
+                @foreach (var product in Model)
+                {
+                    <partial name="_ProductCard" model="product" />
+                }
+            </div>
+        }
+    </div>
+</div>

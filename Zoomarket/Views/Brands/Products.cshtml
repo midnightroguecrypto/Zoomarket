@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Zoomarket.Models.Product>
+@{
+    ViewData["Title"] = ViewBag.BrandName;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/brands.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/catalog.css" asp-append-version="true" />
+}
+
+<section class="brands-hero">
+    <div class="hero-content">
+        <h1>Бренд: @ViewBag.BrandName</h1>
+        <p>Все товары от этого производителя</p>
+
+        <!-- Декоративные лапки -->
+        <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
+        <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
+    </div>
+    <div class="hero-image">
+      
+        <img src="@ViewBag.BrandLogo" alt="@ViewBag.BrandName" />
+    </div>
+</section>
+
+<div class="catalog-container" style="display: block; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <!-- Навигация по другим брендам -->
+    <div class="brands-filter-nav">
+        <a asp-action="Index" class="btn-outline">Все бренды</a>
+        @foreach (var brand in ViewBag.AllBrands as List<Zoomarket.Models.Brand>)
+        {
+            <a asp-action="Products" asp-route-brandName="@brand.Name" class="brand-pill @(brand.Name == ViewBag.BrandName ? "active" : "")">
+                @brand.Name
+            </a>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <p style="text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-top: 50px;">Товаров этого бренда пока нет.</p>
+    }
+    else
+    {
+        <div class="products-grid">
+            @foreach (var product in Model)
+            {
+                <partial name="_ProductCard" model="product" />
+            }
+        </div>
+    }
+</div>

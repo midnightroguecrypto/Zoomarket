@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Zoomarket.Models.CartItem>
+@{
+    ViewData["Title"] = "Корзина";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/cart.css" asp-append-version="true" />
+}
+
+
+
+<div class="cart-container">
+    @if (!Model.Any())
+    {
+        <div class="empty-cart">
+         
+            <div class="empty-cart-icon">
+                <img src="~/img/cartoon.png" alt="Грустный котик" />
+            </div>
+
+            <h2>В корзине пока пусто</h2>
+            <p>Грустный котик ждет, когда вы добавите что-нибудь вкусненькое!</p>
+            <a asp-controller="Catalog" asp-action="Index" class="btn-primary">Перейти в каталог</a>
+        </div>
+    }
+    else
+    {
+        <div class="cart-layout">
+            <!-- Список товаров -->
+            <div class="cart-items">
+                @foreach (var item in Model)
+                {
+                    <div class="cart-item">
+                        <img src="@item.Product?.ImageUrl" alt="@item.Product?.Name">
+
+                        <div class="cart-item-info">
+                            <h3>@item.Product?.Name</h3>
+                            <p class="cart-item-price">@item.Product?.Price.ToString("N0") ₽</p>
+                        </div>
+
+                        <!-- Управление количеством -->
+                        <div class="cart-quantity">
+                            <form asp-action="UpdateQuantity" method="post" style="display:flex;">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <button type="submit" name="quantity" value="@(item.Quantity - 1)" class="qty-btn">-</button>
+                                <span class="qty-value">@item.Quantity</span>
+                                <button type="submit" name="quantity" value="@(item.Quantity + 1)" class="qty-btn">+</button>
+                            </form>
+                        </div>
+
+                        <div class="cart-item-total">
+                            @(((item.Product?.Price ?? 0) * item.Quantity).ToString("N0")) ₽
+                        </div>
+
+                        <form asp-action="Remove" method="post">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn-remove"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </div>
+                }
+            </div>
+
+            <!-- Итоговая панель -->
+            <div class="cart-summary">
+                <h3>Итого</h3>
+                <div class="summary-row">
+                    <span>Товары (@Model.Sum(i => i.Quantity) шт.)</span>
+                    <span>@Model.Sum(i => (i.Product?.Price ?? 0) * i.Quantity).ToString("N0") ₽</span>
+                </div>
+                <div class="summary-row">
+                    <span>Доставка</span>
+                    <span>Бесплатно</span>
+                </div>
+                <div class="summary-total">
+                    <span>К оплате:</span>
+                    <strong>@Model.Sum(i => (i.Product?.Price ?? 0) * i.Quantity).ToString("N0") ₽</strong>
+                </div>
+
+                <!-- Форма оформления заказа -->
+                <form asp-action="Checkout" method="post" style="margin-top: 20px;">
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label for="address" style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted);">Адрес доставки</label>
+                        <input type="text" name="address" id="address" placeholder="Город, улица, дом, квартира" required
+                               style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; margin-top: 5px;" />
+                    </div>
+                    <button type="submit" class="btn-primary w-100" style="padding: 15px;">Оформить заказ</button>
+                </form>
+            </div>
+        </div>
+    }
+</div>

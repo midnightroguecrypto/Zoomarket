@@ -1,22 +1,44 @@
 ﻿<footer class="site-footer">
     <div class="footer-container">
+        <!-- Колонка 1: О магазине -->
         <div class="footer-info">
-            <h3>Zoomarket</h3>
-            <p>Делаем сложные вещи простыми с 2024 года.</p>
+            <div class="footer-logo">
+                <!-- Картинка только с животными (та же, что и в шапке) -->
+                <img src="~/img/logo.png" alt="WarmPaw" class="footer-logo-img" />
+
+                <!-- Текст под картинкой -->
+                <div class="footer-logo-text">
+                    <span class="footer-brand-name">WarmPaw</span>
+                    <span class="footer-slogan">Тепло лап в каждом заказе</span>
+                </div>
+            </div>
         </div>
+
+        <!-- Колонка 2: Навигация (в 2 колонки) -->
         <div class="footer-links">
             <h4>Навигация</h4>
-            <ul>
+            <ul class="footer-nav-grid">
                 <li><a asp-controller="Home" asp-action="Index">Главная</a></li>
-                <li><a asp-controller="Home" asp-action="Privacy">Политика конфиденциальности</a></li>
+                <li><a asp-controller="Home" asp-action="About">О магазине</a></li>
+                <li><a asp-controller="Home" asp-action="Catalog">Каталог</a></li>
+                <li><a asp-controller="Home" asp-action="Promotions">Акции</a></li>
+                <li><a asp-controller="Home" asp-action="NewArrivals">Новинки</a></li>
+                <li><a asp-controller="Home" asp-action="Brands">Бренды</a></li>
+                <li><a asp-controller="Home" asp-action="Reviews">Отзывы</a></li>
+                <li><a asp-controller="Home" asp-action="Contacts">Контакты</a></li>
             </ul>
         </div>
+
+        <!-- Колонка 3: Контакты -->
         <div class="footer-contact">
             <h4>Свяжитесь с нами</h4>
-            <p>Email: info@zoomarket.com</p>
-            <p>Тел: +7 (999) 123-45-67</p>
+            <p><i class="fa-solid fa-location-dot"></i> г. Москва, ул. Зоологическая, д. 15</p>
+            <p><i class="fa-solid fa-phone"></i> +7 (999) 123-45-67</p>
+            <p><i class="fa-solid fa-envelope"></i> info@zoomarket.ru</p>
+            <p><i class="fa-regular fa-clock"></i> Пн-Вс: с 09:00 до 21:00</p>
         </div>
     </div>
+
     <div class="footer-bottom">
         <p>&copy; @DateTime.Now.Year Zoomarket. Все права защищены.</p>
     </div>

@@ -1,0 +1,175 @@
+﻿@model IEnumerable<Zoomarket.Models.Product>
+@{
+    ViewData["Title"] = "Управление товарами";
+    var categories = ViewBag.Categories as List<Zoomarket.Models.Category>;
+    var brands = ViewBag.Brands as List<Zoomarket.Models.Brand>;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+<div class="admin-container">
+    <a asp-action="Index" class="btn-back-admin">
+        <i class="fa-solid fa-arrow-left"></i> Назад в админку
+    </a>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Товары</h1>
+        <button class="btn-primary" onclick="openProductModal(0, '', '', 0, 0, '', '')"><i class="fa-solid fa-plus"></i> Добавить товар</button>
+    </div>
+
+    @if (TempData["AdminMessage"] != null)
+    {
+        <div class="profile-alert success" style="margin-bottom: 20px; padding: 15px; background: #d4edda; color: #155724; border-radius: 8px;">@TempData["AdminMessage"]</div>
+    }
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Фото</th>
+                <th>Название</th>
+                <th>Категория</th>
+                <th>Цена</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td><img src="@product.ImageUrl" alt="@product.Name" style="width: 50px; height: 50px; object-fit: contain; border-radius: 8px; background: #f8f9fa;"></td>
+                    <td>@product.Name</td>
+                    <td>@product.Category?.Name</td>
+                    <td>@product.Price.ToString("N0") ₽</td>
+                    <td>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <button class="btn-primary" style="padding: 5px 10px; font-size: 0.85rem;"
+                                    data-id="@product.Id"
+                                    data-name="@product.Name"
+                                    data-desc="@product.ShortDescription"
+                                    data-price="@product.Price"
+                                    data-oldprice="@product.OldPrice"
+                                    data-image="@product.ImageUrl"
+                                    data-brand="@product.Brand"
+                                    onclick="openProductModalFromButton(this)">
+                                Изменить
+                            </button>
+                            <form asp-action="DeleteProduct" asp-route-id="@product.Id" method="post" onsubmit="return confirm('Удалить?');" style="margin: 0;">
+                                <button type="submit" class="btn-danger-admin">Удалить</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО ТОВАРА -->
+<div class="custom-modal-overlay" id="productModal" style="display: none;">
+    <div class="custom-modal" style="max-width: 600px; text-align: left;">
+        <h3 id="productModalTitle">Добавить товар</h3>
+        
+        <form asp-action="SaveProduct" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="Id" id="prodId" value="0" />
+            <input type="hidden" name="ImageUrl" id="prodImageUrl" value="" />
+
+            <div class="form-group">
+                <label>Название</label>
+                <input name="Name" id="prodName" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label>Краткое описание</label>
+                <textarea name="ShortDescription" id="prodDesc" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;">
+                    <label>Цена (₽)</label>
+                    
+                    <input name="Price" id="prodPrice" class="form-control" type="number" step="0.01"
+                           min="1" max="100000000" title="Цена должна быть от 1 до 1 000 000 ₽" required />
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Старая цена</label>
+                    
+                    <input name="OldPrice" id="prodOldPrice" class="form-control" type="number" step="0.01"
+                           min="0" max="100000000" title="Старая цена должна быть от 0 до 1 000 000 ₽" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;">
+                    <label>Категория</label>
+                    <select name="CategoryId" id="prodCategoryId" class="form-control" required>
+                        <option value="">Выберите</option>
+                        @foreach (var cat in categories)
+                        {
+                            <option value="@cat.Id">@cat.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Бренд</label>
+                    <select name="Brand" id="prodBrand" class="form-control" required>
+                        <option value="">Выберите</option>
+                        @foreach (var brand in brands)
+                        {
+                            <option value="@brand.Name">@brand.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Акция (скидка)</label>
+                    <select name="selectedPromoId" id="prodPromo" class="form-control">
+                        <option value="">Без акции</option>
+                        @foreach (var promo in ViewBag.Promotions as List<Zoomarket.Models.Promotion>)
+                        {
+                            <option value="@promo.Id">@promo.Title (@promo.DiscountPercent%)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Картинка</label>
+                <input type="file" name="imageFile" class="form-control" accept="image/*" />
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="closeModal('productModal')" class="btn-outline" style="flex: 1;">Отмена</button>
+                <button type="submit" class="btn-primary" style="flex: 1;">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 1. Функция для заполнения модального окна
+        function openProductModal(id, name, desc, price, oldPrice, imageUrl, brand) {
+            document.getElementById('productModalTitle').innerText = id === 0 ? 'Добавить товар' : 'Редактировать товар';
+            document.getElementById('prodId').value = id;
+            document.getElementById('prodName').value = name;
+            document.getElementById('prodDesc').value = desc;
+            document.getElementById('prodPrice').value = price;
+            document.getElementById('prodOldPrice').value = oldPrice > 0 ? oldPrice : '';
+            document.getElementById('prodImageUrl').value = imageUrl;
+            document.getElementById('prodBrand').value = brand;
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        // 2. Новая функция, которая вызывается из кнопки "Изменить"
+        function openProductModalFromButton(btn) {
+            const id = btn.getAttribute('data-id');
+            const name = btn.getAttribute('data-name');
+            const desc = btn.getAttribute('data-desc');
+            const price = btn.getAttribute('data-price');
+            const oldPrice = btn.getAttribute('data-oldprice');
+            const imageUrl = btn.getAttribute('data-image');
+            const brand = btn.getAttribute('data-brand');
+
+            openProductModal(id, name, desc, price, oldPrice, imageUrl, brand);
+        }
+
+        // 3. Закрытие модалки
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+    </script>
+}

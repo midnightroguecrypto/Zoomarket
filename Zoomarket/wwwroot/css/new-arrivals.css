@@ -1,0 +1,246 @@
+﻿/* =========================================
+   СТИЛИ ДЛЯ СТРАНИЦЫ НОВИНОК
+   ========================================= */
+.page-header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background-color: #ffffff;
+    border-bottom: 4px solid var(--primary-color);
+    margin-bottom: 40px;
+}
+
+    .page-header h1 {
+        font-size: 2.8rem;
+        color: var(--secondary-color);
+        margin-bottom: 10px;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+    }
+
+/* Сетка товаров */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+/* Карточка */
+.product-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+.product-image-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+    .product-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+/* Инфо */
+.product-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-category {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.product-info h3 {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-bottom: 5px;
+}
+
+.product-short-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.product-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.new-price {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #dc3545;
+}
+
+.btn-cart {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .btn-cart:hover {
+        background: var(--primary-hover);
+        transform: scale(1.1);
+    }
+.new-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 20px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    border-radius: 0 0 20px 20px;
+}
+
+/* Текстовая часть (справа) */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    max-width: 500px;
+    order: 2; /* Текст справа */
+}
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+/* Иллюстрация (слева) */
+.hero-image {
+    position: relative;
+    z-index: 2;
+    order: 1; /* Картинка слева */
+}
+
+    .hero-image img {
+        max-width: 200px;
+        height: auto;
+        filter: drop-shadow(0 10px 20px rgba(0, 150, 136, 0.2));
+        animation: float 4s ease-in-out infinite;
+    }
+
+/* Декоративные лапки (цвет под стать фону) */
+.hero-decor {
+    position: absolute;
+    color: rgba(0, 150, 136, 0.1);
+    z-index: 1;
+}
+
+.paw-1 {
+    top: 20%;
+    right: 10%;
+    font-size: 4rem;
+    transform: rotate(-20deg);
+}
+
+.paw-2 {
+    bottom: 10%;
+    left: 20%;
+    font-size: 5rem;
+    transform: rotate(15deg);
+}
+
+/* Анимация парения */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* --- АДАПТИВНОСТЬ --- */
+@media (max-width: 992px) {
+    .new-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        text-align: center;
+        order: 2;
+    }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+    .hero-image {
+        order: 1;
+    }
+
+        .hero-image img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+    .hero-decor {
+        display: none;
+    }
+}
+
+

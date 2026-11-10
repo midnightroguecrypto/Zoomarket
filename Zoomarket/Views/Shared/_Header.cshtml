@@ -1,15 +1,57 @@
 ﻿<header class="site-header">
     <div class="header-container">
-        <!-- Логотип / Название -->
-        <a asp-controller="Home" asp-action="Index" class="logo">
-            <span class="logo-icon">✨</span> Zoomarket
+        <!-- Логотип -->
+        <a asp-controller="Home" asp-action="Index" class="logo" style="display: flex; align-items: center; gap: 15px; text-decoration: none;">
+
+            <!-- Картинка только с животными -->
+            <img src="~/img/logo.png" alt="WarmPaw" style="height: 45px; width: auto; object-fit: contain;" />
+
+            <!-- Текстовая часть (название + слоган) -->
+            <div style="display: flex; flex-direction: column; line-height: 1.1; text-align: left;">
+                <span style="color: #ffffff; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.5px;">WarmPaw</span>
+                <span style="color: rgb(163, 201, 168); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.3px; margin-top: 2px;">Тепло лап в каждом заказе</span>
+            </div>
         </a>
 
-        <!-- Навигационное меню -->
+        <!-- Навигация -->
         <nav class="main-nav">
-            <a asp-controller="Home" asp-action="Index">Главная</a>
-            <a asp-controller="Home" asp-action="Privacy">О нас</a>
+            <a asp-controller="Home" asp-action="About">О магазине</a>
+            <a asp-controller="Catalog" asp-action="Index">Каталог</a>
+            <a asp-controller="Promotions" asp-action="Index">Акции</a>
+            <a asp-controller="NewArrivals" asp-action="Index">Новинки</a>
+            <a asp-controller="Brands" asp-action="Index">Бренды</a>
+            <a asp-controller="Reviews" asp-action="Index">Отзывы</a>
             <a asp-controller="Home" asp-action="Contacts">Контакты</a>
         </nav>
+
+        <!-- Действия -->
+        <div class="header-actions">
+            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+            {
+                <a asp-controller="Admin" asp-action="Index" class="action-icon admin-icon" title="Админ-панель">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </a>
+            }
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                
+                <a asp-controller="Profile" asp-action="Index" class="action-icon" title="Личный кабинет">
+                    <i class="fa-solid fa-user"></i> 
+                </a>
+            }
+            else
+            {
+                
+                <a asp-controller="Account" asp-action="Login" class="action-icon" title="Войти">
+                    <i class="fa-solid fa-right-to-bracket"></i> 
+                </a>
+            }
+
+           
+            <a asp-controller="Cart" asp-action="Index" class="action-icon" title="Корзина">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+        </div>
+
     </div>
 </header>

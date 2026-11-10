@@ -1,0 +1,313 @@
+﻿/* =========================================
+   АДМИН-ПАНЕЛЬ
+   ========================================= */
+.admin-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.admin-header {
+    margin-bottom: 40px;
+}
+
+    .admin-header h1 {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 5px;
+    }
+
+    .admin-header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+    }
+
+/* Карточки дашборда */
+.admin-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.admin-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .admin-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    }
+
+.admin-card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.admin-card h3 {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-bottom: 5px;
+}
+
+.admin-card p {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.admin-link {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: gap 0.3s;
+}
+
+.admin-card:hover .admin-link {
+    gap: 10px;
+}
+
+.admin-info {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+    .admin-info h2 {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 20px;
+    }
+
+.quick-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Таблицы */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+    margin-top: 20px;
+}
+
+    .admin-table th, .admin-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .admin-table th {
+        background: #f8f9fa;
+        font-weight: 700;
+        color: var(--secondary-color);
+    }
+
+/* Статусы */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+    .status-badge.вобработке {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-badge.собран {
+        background: #cce5ff;
+        color: #004085;
+    }
+
+    .status-badge.доставляется {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-badge.доставлен {
+        background: #28a745;
+        color: #fff;
+    }
+
+    .status-badge.отменен {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+/* Формы */
+.admin-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    max-width: 800px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+}
+
+    .admin-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .admin-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--text-main);
+    }
+
+    .admin-form .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: inherit;
+        background: var(--bg-color);
+    }
+
+        .admin-form .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+    .admin-form .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .admin-form .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.custom-modal {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s ease;
+}
+
+    .custom-modal h3 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: var(--secondary-color);
+    }
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.btn-back-admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    margin-bottom: 20px;
+}
+
+    .btn-back-admin:hover {
+        background: var(--bg-color);
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+/* =========================================
+   КНОПКА УДАЛЕНИЯ/ОТМЕНЫ (DANGER)
+   ========================================= */
+.btn-danger-admin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: #fff;
+    border: 1px solid #dc3545;
+    color: #dc3545;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    line-height: 1.2;
+}
+
+    .btn-danger-admin i {
+        font-size: 0.9rem;
+    }
+
+    .btn-danger-admin:hover {
+        background: #dc3545;
+        color: #fff;
+        border-color: #dc3545;
+        box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
+    }
+
+    /* Если кнопка должна быть меньше (для таблиц) */
+    .btn-danger-admin.btn-sm {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }

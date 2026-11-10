@@ -1,0 +1,123 @@
+﻿@model IEnumerable<Zoomarket.Models.Promotion>
+@{
+    ViewData["Title"] = "Акции";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/promotions.css" asp-append-version="true" />
+}
+
+<!-- Заголовок -->
+<section class="promo-hero">
+    <div class="hero-content">
+        <h1>Акции и спецпредложения</h1>
+        <p>Экономьте с удовольствием для ваших питомцев</p>
+        <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
+        <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
+    </div>
+    <div class="hero-image">
+        <img src="~/img/free-icon-animal-4299428.png" alt="Попугай" />
+    </div>
+</section>
+
+<div class="promo-page-container">
+    @if (!Model.Any())
+    {
+        <p style="text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-top: 50px;">Сейчас нет активных акций. Заходите позже!</p>
+    }
+    else
+    {
+        <div class="promo-slider-container">
+            <!-- Сам блок с баннерами -->
+            <div class="promo-slider-banners" id="promo-banner-slider">
+                @{
+                    int index = 0;
+                }
+                @foreach (var promo in Model)
+                {
+                    <div class="promo-slide-banner @(index == 0 ? "active" : "")">
+                        <!-- Левая часть: Текст -->
+                        <div class="promo-banner-content">
+                            <span class="promo-label"><i class="fa-solid fa-fire"></i> Горячее предложение</span>
+                            <h2>@promo.Title</h2>
+                            <p>@promo.Description</p>
+
+                            @if (!string.IsNullOrEmpty(promo.DiscountText))
+                            {
+                                <span class="promo-badge">@promo.DiscountText</span>
+                            }
+
+                            <a asp-controller="Catalog" asp-action="Index" class="btn-primary promo-btn-catalog">В каталог</a>
+                        </div>
+
+                        <!-- Правая часть: Картинка -->
+                        <div class="promo-banner-image-wrapper">
+                            @if (!string.IsNullOrEmpty(promo.ImageUrl))
+                            {
+                                <div class="promo-banner-image" style="background-image: url('@promo.ImageUrl');"></div>
+                            }
+                            else
+                            {
+                                <div class="promo-banner-image placeholder-image"></div>
+                            }
+                            <!-- Декоративные элементы на картинке -->
+                            <div class="decor-circle circle-1"></div>
+                            <div class="decor-circle circle-2"></div>
+                        </div>
+                    </div>
+                    index++;
+                }
+            </div>
+
+            <!-- Кнопки навигации (ВЫНЕСЕНЫ) -->
+            <button class="promo-btn prev" onclick="prevPromo()">&#10094;</button>
+            <button class="promo-btn next" onclick="nextPromo()">&#10095;</button>
+
+            <!-- Точки (ВЫНЕСЕНЫ) -->
+            <div class="promo-dots">
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <span class="promo-dot @(i == 0 ? "active" : "")" onclick="goToPromo(@i)"></span>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        let currentPromoIndex = 0;
+        const promoSlides = document.querySelectorAll('.promo-slide-banner');
+        const promoDots = document.querySelectorAll('.promo-dot');
+
+        function showPromoSlide(index) {
+            promoSlides.forEach(s => s.classList.remove('active'));
+            promoDots.forEach(d => d.classList.remove('active'));
+
+            if (promoSlides[index]) {
+                promoSlides[index].classList.add('active');
+                promoDots[index].classList.add('active');
+                currentPromoIndex = index;
+            }
+        }
+
+        function nextPromo() {
+            let next = (currentPromoIndex + 1) % promoSlides.length;
+            showPromoSlide(next);
+        }
+
+        function prevPromo() {
+            let prev = (currentPromoIndex - 1 + promoSlides.length) % promoSlides.length;
+            showPromoSlide(prev);
+        }
+
+        function goToPromo(index) {
+            showPromoSlide(index);
+        }
+
+        // Автопрокрутка каждые 5 секунд
+        if (promoSlides.length > 1) {
+            setInterval(nextPromo, 5000);
+        }
+    </script>
+}

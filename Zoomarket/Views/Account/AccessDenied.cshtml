@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Доступ запрещён";
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WarmPaw</title>
+
+    <!-- Подключаем наши стили и шрифты -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <section class="access-denied-section">
+        <div class="access-denied-container">
+            >
+            <div class="cat-image-wrapper">
+                <img src="~/img/free-icon-animal-15516032.png" alt="Котик запрещает" style="max-width: 180px; height: auto;" />
+            </div>
+
+            <h2>Доступ запрещён</h2>
+            <p>Котик не пускает вас на эту страницу. У вас нет прав для просмотра этого раздела. Пожалуйста, обратитесь к администратору, если вы считаете, что это ошибка.</p>
+
+            <div class="access-denied-actions">
+                <a asp-controller="Home" asp-action="Index" class="btn-primary">На главную</a>
+                <a asp-controller="Profile" asp-action="Index" class="btn-outline">В личный кабинет</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

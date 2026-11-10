@@ -1,0 +1,154 @@
+﻿@model IEnumerable<Zoomarket.Models.Order>
+@{
+    ViewData["Title"] = "Мои заказы";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+}
+
+<!-- Креативный заголовок -->
+<section class="profile-hero">
+    <div class="hero-content">
+        <h1>Личный кабинет</h1>
+        <p>Добро пожаловать, @ViewBag.FullName!</p>
+        <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
+        <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
+        <div class="hero-decor paw-3"><i class="fa-solid fa-paw"></i></div>
+    </div>
+    <div class="hero-image">
+        <img src="~/img/free-icon-pet-house-3047928.png" alt="Дом" />
+    </div>
+</section>
+
+<!-- Уведомление -->
+@if (TempData["ProfileMessage"] != null)
+{
+    <div class="profile-alert @TempData["ProfileStatus"]" style="max-width: 1200px; margin: 20px auto; padding: 15px 20px; border-radius: 12px; text-align: center;">
+        @TempData["ProfileMessage"]
+    </div>
+}
+
+<div class="profile-container">
+    <!-- Боковая панель (partial) -->
+    <partial name="_ProfileSidebar" />
+
+    <!-- Основной контент: Заказы -->
+    <div class="profile-content">
+        <h2>История заказов</h2>
+
+        @if (!Model.Any())
+        {
+            <p style="color: var(--text-muted); margin-top: 20px;">
+                У вас пока нет заказов. <a asp-controller="Catalog" asp-action="Index" style="color: var(--primary-color); font-weight: 600;">Перейти в каталог</a>
+            </p>
+        }
+        else
+        {
+            @foreach (var order in Model)
+            {
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-number">Заказ №@order.Id</span>
+                            <span class="order-date">от @order.OrderDate.ToString("dd.MM.yyyy")</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span class="order-status @order.Status.Replace(" ", "").ToLower()">@order.Status</span>
+                            @if (order.Status != "Доставлен" && order.Status != "Отменен")
+                            {
+                                <button type="button" class="btn-cancel" onclick="openCancelModal(@order.Id)">
+                                    <i class="fa-solid fa-xmark"></i> Отменить
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    @if (order.Status == "Отменен" && !string.IsNullOrEmpty(order.CancelReason))
+                    {
+                        <div style="padding: 10px 20px; background: #fff3cd; color: #856404; font-size: 0.9rem; border-bottom: 1px solid var(--border-color);">
+                            <strong>Причина отмены:</strong> @order.CancelReason
+                        </div>
+                    }
+
+                    <div class="order-body">
+                        <div class="order-items">
+                            @foreach (var item in order.Items)
+                            {
+                                <div class="order-item">
+                                    <img src="@item.Product?.ImageUrl" alt="@item.Product?.Name">
+                                    <div class="item-details">
+                                        <span class="item-name">@item.Product?.Name</span>
+                                        <span class="item-qty">@item.Quantity шт. × @item.Price.ToString("N0") ₽</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="order-total">
+                            <span>Итого:</span>
+                            <strong>@order.TotalAmount.ToString("N0") ₽</strong>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<!-- Модальное окно отмены заказа -->
+<div class="custom-modal-overlay" id="cancelModal" style="display: none;">
+    <div class="custom-modal">
+        <div class="modal-icon" style="color: #dc3545;">
+            <i class="fa-solid fa-circle-question"></i>
+        </div>
+        <h3>Отмена заказа</h3>
+        <p style="margin-bottom: 15px;">Пожалуйста, укажите причину отмены:</p>
+
+        <form asp-action="CancelOrder" method="post" id="cancelForm">
+            <input type="hidden" name="orderId" id="cancelOrderId" value="" />
+            <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="reason" value="Не тот товар" required><span>Не тот товар</span></label>
+                <label class="radio-option"><input type="radio" name="reason" value="Передумал(а) покупать"><span>Передумал(а) покупать</span></label>
+                <label class="radio-option"><input type="radio" name="reason" value="Нашел(ла) дешевле"><span>Нашел(ла) дешевле</span></label>
+                <label class="radio-option"><input type="radio" name="reason" value="Долгая доставка"><span>Долгая доставка</span></label>
+                <label class="radio-option"><input type="radio" name="reason" value="Другое"><span>Другое</span></label>
+            </div>
+            <div id="otherReasonBlock" style="display: none; margin-top: 15px;">
+                <textarea name="otherReason" class="form-control" rows="3" placeholder="Опишите причину..."></textarea>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <button type="button" onclick="closeCancelModal()" class="btn-outline" style="flex: 1;">Назад</button>
+                <button type="submit" class="btn-primary" style="flex: 1; background: #dc3545;">Отменить заказ</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openCancelModal(orderId) {
+            document.getElementById('cancelOrderId').value = orderId;
+            document.getElementById('cancelModal').style.display = 'flex';
+            document.getElementById('cancelForm').reset();
+            document.getElementById('otherReasonBlock').style.display = 'none';
+        }
+        function closeCancelModal() {
+            document.getElementById('cancelModal').style.display = 'none';
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const radios = document.querySelectorAll('input[name="reason"]');
+            const otherBlock = document.getElementById('otherReasonBlock');
+            radios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (this.value === 'Другое') {
+                        otherBlock.style.display = 'block';
+                        otherBlock.querySelector('textarea').required = true;
+                    } else {
+                        otherBlock.style.display = 'none';
+                        otherBlock.querySelector('textarea').required = false;
+                    }
+                });
+            });
+        });
+    </script>
+}

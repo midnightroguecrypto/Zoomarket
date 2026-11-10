@@ -1,0 +1,330 @@
+﻿/* =========================================
+   СТИЛИ ДЛЯ КАТАЛОГА
+   ========================================= */
+.catalog-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.filters-sidebar {
+    width: 280px;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 100px;
+}
+
+    .filters-sidebar h3 {
+        margin-bottom: 20px;
+        color: var(--secondary-color);
+        font-size: 1.3rem;
+    }
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+    .filter-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-main);
+    }
+
+.price-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.products-area {
+    flex: 1;
+}
+
+/* =========================================
+   СЕТКА ТОВАРОВ И КАРТОЧКА (ГЛАВНЫЙ ФИКС)
+   ========================================= */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* Сама карточка */
+.product-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; /* Важно для плашек */
+    display: flex;
+    flex-direction: column;
+}
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+/* Обертка для картинки */
+.product-image-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+    .product-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+.product-card:hover .product-image-wrapper img {
+    transform: scale(1.05);
+}
+
+/* Информация внутри карточки */
+.product-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-category {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.product-info h3 {
+    font-size: 1rem;
+    color: var(--text-main);
+    font-weight: 600;
+    margin-bottom: 5px;
+    line-height: 1.3;
+}
+
+.product-short-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Обрезаем текст после 2 строк */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Низ карточки (цена и кнопка) */
+.product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.product-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.new-price {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #dc3545; /* Красный цвет для новой цены */
+}
+
+.btn-cart {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-cart:hover {
+        background: var(--primary-hover);
+        transform: scale(1.1);
+    }
+
+/* =========================================
+   ПЛАШКИ НА КАРТОЧКАХ
+   ========================================= */
+.promo-card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #dc3545;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 3;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.new-card-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 3;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* =========================================
+   АДАПТИВНОСТЬ
+   ========================================= */
+@media (max-width: 768px) {
+    .catalog-container {
+        flex-direction: column;
+    }
+
+    .filters-sidebar {
+        width: 100%;
+        position: static;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+}
+.catalog-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 20px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    max-width: 500px;
+}
+
+    .hero-content h1 {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+/* Иллюстрация */
+.hero-image {
+    position: relative;
+    z-index: 2;
+}
+
+    .hero-image img {
+        max-width: 200px;
+        height: auto;
+        filter: drop-shadow(0 10px 20px rgba(74, 124, 89, 0.2));
+        animation: float 4s ease-in-out infinite;
+    }
+
+/* Декоративные лапки */
+.hero-decor {
+    position: absolute;
+    color: rgba(74, 124, 89, 0.1);
+    z-index: 1;
+}
+
+.paw-1 {
+    top: 20%;
+    left: 10%;
+    font-size: 4rem;
+    transform: rotate(-20deg);
+}
+
+.paw-2 {
+    bottom: 10%;
+    right: 20%;
+    font-size: 5rem;
+    transform: rotate(15deg);
+}
+
+/* Анимация парения */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@media (max-width: 992px) {
+    .catalog-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+    .hero-image img {
+        max-width: 150px;
+        margin-top: 10px;
+    }
+
+    .hero-decor {
+        display: none;
+    }
+}

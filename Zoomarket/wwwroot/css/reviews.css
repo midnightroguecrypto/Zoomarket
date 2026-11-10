@@ -1,0 +1,382 @@
+﻿/* =========================================
+   СТРАНИЦА ОТЗЫВОВ
+   ========================================= */
+
+/* --- КРЕАТИВНЫЙ ЗАГОЛОВОК --- */
+.reviews-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+    .reviews-hero .hero-content {
+        position: relative; /* Важно для позиционирования лапок */
+        z-index: 2;
+        text-align: left;
+        max-width: 500px;
+        order: 1;
+    }
+
+    .reviews-hero h1 {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+
+    .reviews-hero p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+    
+    .reviews-hero .hero-image {
+        position: relative;
+        z-index: 2;
+        order: 1;
+    }
+
+        .reviews-hero .hero-image img {
+            max-width: 200px;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(156, 39, 176, 0.2));
+            animation: float 4s ease-in-out infinite;
+        }
+
+    /* --- ДЕКОРАТИВНЫЕ ЛАПКИ (3 штуки) --- */
+    .reviews-hero .hero-decor {
+        position: absolute;
+        color: rgba(156, 39, 176, 0.15);
+        z-index: 1;
+    }
+
+    .reviews-hero .paw-1 {
+        top: 5%;
+        left: 0%;
+        font-size: 4rem;
+        transform: rotate(-25deg);
+    }
+
+    .reviews-hero .paw-2 {
+        bottom: 39%;
+        right: 25%;
+        font-size: 5rem;
+        transform: rotate(20deg);
+    }
+
+    .reviews-hero .paw-3 {
+        top: 24%;
+        left: 38%;
+        font-size: 5rem;
+        transform: rotate(60deg);
+    }
+
+/* Анимация парения */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* --- ОСНОВНОЙ КОНТЕЙНЕР --- */
+.reviews-container {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
+}
+
+/* --- ДВУХКОЛОНОЧНЫЙ МАКЕТ --- */
+.reviews-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+/* --- ЛЕВАЯ КОЛОНКА: ФОРМА --- */
+.review-form-side {
+    flex: 1;
+    min-width: 300px;
+    position: sticky;
+    top: 100px;
+}
+
+.review-form-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+}
+
+    .review-form-box h2 {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+.review-form .form-group {
+    margin-bottom: 15px;
+}
+
+.review-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 0.9rem;
+}
+
+.review-form .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--bg-color);
+}
+
+    .review-form .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+    }
+
+/* --- ИНТЕРАКТИВНЫЕ ЗВЕЗДЫ --- */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse; /* Звезды закрашиваются справа налево */
+    justify-content: flex-end;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+    .star-rating input {
+        display: none; /* Скрываем радиокнопки */
+    }
+
+    .star-rating label {
+        font-size: 1.8rem;
+        color: #e0dcd3; /* Цвет пустой звезды */
+        cursor: pointer;
+        transition: color 0.2s;
+        margin: 0;
+    }
+
+        /* При наведении на звезду — красим её и все предыдущие */
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #fbbf24;
+        }
+
+/* --- ПРАВАЯ КОЛОНКА: СПИСОК ОТЗЫВОВ --- */
+.reviews-list-side {
+    flex: 2;
+    min-width: 300px;
+}
+
+    .reviews-list-side h2 {
+        font-size: 1.8rem;
+        color: var(--secondary-color);
+        margin-bottom: 25px;
+    }
+
+.review-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.review-avatar {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.review-author-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+.review-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.review-stars {
+    color: #fbbf24;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.review-text {
+    font-size: 1rem;
+    color: var(--text-main);
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+/* --- АДАПТИВНОСТЬ --- */
+@media (max-width: 992px) {
+    .reviews-layout {
+        flex-direction: column;
+    }
+
+    .review-form-side {
+        width: 100%;
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .reviews-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+        .reviews-hero .hero-content {
+            text-align: center;
+            order: 2;
+        }
+
+        .reviews-hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .reviews-hero .hero-image {
+            order: 1;
+        }
+
+            .reviews-hero .hero-image img {
+                max-width: 150px;
+                margin-bottom: 20px;
+            }
+
+        /* На мобильных скрываем лапки */
+        .reviews-hero .hero-decor {
+            display: none;
+        }
+}
+/* =========================================
+   МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЙ
+   ========================================= */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+}
+
+.custom-modal {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s ease;
+}
+
+.modal-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.custom-modal.success .modal-icon {
+    color: var(--primary-color); /* Зеленый */
+}
+
+.custom-modal.error .modal-icon {
+    color: #dc3545; /* Красный */
+}
+
+.custom-modal h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+.custom-modal p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.custom-modal .btn-primary {
+    padding: 12px 30px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

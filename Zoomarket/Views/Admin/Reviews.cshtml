@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Zoomarket.Models.Review>
+@{
+    ViewData["Title"] = "Модерация отзывов";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+<div class="admin-container">
+    <a asp-action="Index" class="btn-back-admin">
+        <i class="fa-solid fa-arrow-left"></i> Назад в админку
+    </a>
+    <h1>Модерация отзывов</h1>
+
+    @if (TempData["AdminMessage"] != null)
+    {
+        <div class="profile-alert success" style="margin-bottom: 20px; padding: 15px; background: #d4edda; color: #155724; border-radius: 8px;">
+            @TempData["AdminMessage"]
+        </div>
+    }
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Автор</th>
+                <th>Оценка</th>
+                <th>Текст</th>
+                <th>Дата</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td>@review.AuthorName</td>
+                    <td>@review.Rating ★</td>
+                    <td>@review.Text</td>
+                    <td>@review.DateCreated.ToString("dd.MM.yyyy")</td>
+                    <td>
+                        <form asp-action="DeleteReview" method="post" onsubmit="return confirm('Удалить отзыв?');">
+                            <input type="hidden" name="reviewId" value="@review.Id" />
+                            <button type="submit" class="btn-danger-admin">
+                                <i class="fa-solid fa-trash"></i> Удалить
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,20 @@
+﻿@{
+    string activeTab = ViewBag.ActiveTab ?? "Orders";
+}
+
+<div class="profile-sidebar">
+    <div class="user-info-card">
+        <div class="user-avatar">@(((string)ViewBag.FullName).Substring(0, 1).ToUpper())</div>
+        <h3>@ViewBag.FullName</h3>
+        <p>@ViewBag.Email</p>
+    </div>
+
+    <div class="profile-menu">
+        <a asp-action="Index" class="@(activeTab == "Orders" ? "active" : "")">Мои заказы</a>
+        <a asp-action="Reviews" class="@(activeTab == "Reviews" ? "active" : "")">Мои отзывы</a>
+
+        <form asp-controller="Account" asp-action="Logout" method="post" style="margin-top: 20px;">
+            <button type="submit" class="btn-outline w-100">Выйти</button>
+        </form>
+    </div>
+</div>

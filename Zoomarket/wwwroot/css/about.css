@@ -1,0 +1,203 @@
+﻿/* =========================================
+   СТИЛИ ДЛЯ СТРАНИЦЫ "О МАГАЗИНЕ"
+   ========================================= */
+.page-header {
+    text-align: center;
+    padding: 80px 20px 50px;
+    background-color: #ffffff;
+    border-bottom: 4px solid var(--primary-color);
+}
+
+    .page-header h1 {
+        font-size: 2.8rem;
+        color: var(--secondary-color);
+        margin-bottom: 10px;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+    }
+
+.about-content {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.about-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+    .about-text h2 {
+        font-size: 1.8rem;
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+        margin-top: 25px;
+    }
+
+        .about-text h2:first-child {
+            margin-top: 0;
+        }
+
+    .about-text p {
+        font-size: 1rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+
+.about-list {
+    list-style: none;
+    padding: 0;
+}
+
+    .about-list li {
+        font-size: 1rem;
+        color: var(--text-main);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+.about-image {
+    flex: 1;
+    min-width: 300px;
+}
+
+    .about-image img {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(93, 64, 55, 0.15);
+    }
+.about-list li i {
+    color: var(--primary-color); /* Зеленый цвет */
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+/* Адаптивность для этой страницы */
+@media (max-width: 768px) {
+    .about-content {
+        gap: 30px;
+    }
+}
+.about-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 20px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+/* Текстовая часть (справа) */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    max-width: 500px;
+    order: 2; /* Текст идет вторым (справа) */
+}
+
+    .hero-content h1 {
+        font-size: 3rem;
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+        line-height: 1.1;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+/* Иллюстрация (слева) */
+.hero-image {
+    position: relative;
+    z-index: 2;
+    order: 1; /* Картинка идет первой (слева) */
+}
+
+    .hero-image img {
+        max-width: 200px;
+        height: auto;
+        filter: drop-shadow(0 10px 20px rgba(74, 124, 89, 0.2));
+        animation: float 4s ease-in-out infinite;
+    }
+
+/* Декоративные лапки */
+.hero-decor {
+    position: absolute;
+    color: rgba(74, 124, 89, 0.1);
+    z-index: 1;
+}
+
+.paw-1 {
+    top: 20%;
+    right: 10%;
+    font-size: 4rem;
+    transform: rotate(-20deg);
+}
+
+.paw-2 {
+    bottom: 10%;
+    left: 20%;
+    font-size: 5rem;
+    transform: rotate(15deg);
+}
+
+/* Анимация парения */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* --- АДАПТИВНОСТЬ --- */
+@media (max-width: 992px) {
+    .about-hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        text-align: center;
+        order: 2; /* Текст все равно остается снизу */
+    }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+    .hero-image {
+        order: 1; /* Картинка сверху */
+    }
+
+        .hero-image img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+    .hero-decor {
+        display: none;
+    }
+}

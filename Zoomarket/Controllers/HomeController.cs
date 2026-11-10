@@ -1,17 +1,56 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Zoomarket.Models;
+using System.Diagnostics;
 
 namespace Zoomarket.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly AppDbContext _context;
+
+        public HomeController(AppDbContext context)
         {
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            
+            var popularProducts = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Promotions)
+                .Take(4)
+                .ToListAsync();
+
+            
+            var promo = await _context.Promotions.FirstOrDefaultAsync();
+
+            
+            var reviews = await _context.Reviews
+                .OrderByDescending(r => r.DateCreated)
+                .Take(3)
+                .ToListAsync();
+
+            
+            ViewBag.PopularProducts = popularProducts;
+            ViewBag.MainPromo = promo;
+            ViewBag.LatestReviews = reviews;
+
             return View();
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Contacts()
         {
             return View();
         }

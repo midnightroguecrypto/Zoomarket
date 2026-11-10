@@ -1,43 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Главная";
 }
-
-<!-- 1. БОЛЬШОЙ СЛАЙДЕР (HERO CAROUSEL) -->
+@section Styles {
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/catalog.css" asp-append-version="true" /> <!-- ВОТ ЭТА СТРОКА -->
+}
+<!-- 1. БОЛЬШОЙ СЛАЙДЕР (Оставляем как было) -->
 <section class="hero-slider">
     <div class="slides-container">
-        <!-- Слайд 1 -->
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069&auto=format&fit=crop');">
             <div class="slide-content">
                 <h1>Забота, которую<br>они заслуживают</h1>
                 <p>Всё самое лучшее для ваших пушистых друзей. Корма, игрушки и аксессуары с любовью.</p>
-                <a asp-controller="Home" asp-action="Privacy" class="btn-primary">Перейти в каталог</a>
+                <a asp-controller="Catalog" asp-action="Index" class="btn-primary">Перейти в каталог</a>
             </div>
         </div>
-
-        <!-- Слайд 2 -->
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=2064&auto=format&fit=crop');">
             <div class="slide-content">
                 <h1>Здоровое питание<br>каждый день</h1>
                 <p>Только проверенные бренды и свежие продукты для долгой и счастливой жизни питомца.</p>
-                <a asp-controller="Home" asp-action="Privacy" class="btn-primary">Выбрать корм</a>
+                <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="1" class="btn-primary">Выбрать корм</a>
             </div>
         </div>
-
-        <!-- Слайд 3 -->
         <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?q=80&w=2070&auto=format&fit=crop');">
             <div class="slide-content">
                 <h1>Игрушки для<br>настоящих друзей</h1>
                 <p>Помогите вашему любимцу весело провести время. Безопасные и прочные материалы.</p>
-                <a asp-controller="Home" asp-action="Privacy" class="btn-primary">Смотреть игрушки</a>
+                <a asp-controller="Catalog" asp-action="Index" asp-route-categoryId="2" class="btn-primary">Смотреть игрушки</a>
             </div>
         </div>
     </div>
-
-    <!-- Кнопки навигации (стрелки) -->
     <button class="slider-arrow prev" onclick="prevSlide()">&#10094;</button>
     <button class="slider-arrow next" onclick="nextSlide()">&#10095;</button>
-
-    <!-- Точки внизу -->
     <div class="slider-dots">
         <span class="dot active" onclick="goToSlide(0)"></span>
         <span class="dot" onclick="goToSlide(1)"></span>
@@ -45,37 +39,169 @@
     </div>
 </section>
 
-<!-- 2. ЧЕЛОВЕЧЕСКИЙ БЛОК ПРЕИМУЩЕСТВ -->
-<section class="features-human">
-    <div class="features-text">
-        <h2>Почему нас выбирают?</h2>
-        <p>Мы не просто продаем товары. Мы сами владельцы питомцев и точно знаем, что нужно вашим хвостикам.</p>
+<!-- 2. РЕКОМЕНДУЕМЫЕ ТОВАРЫ (Популярное) -->
+<section class="section-container">
+    <div class="section-header">
+        <h2>Популярные товары</h2>
+        <a asp-controller="Catalog" asp-action="Index" class="link-all">Смотреть все <i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
-    <div class="human-cards">
-        <div class="h-card">
-            <div class="h-icon">🐶</div>
-            <h3>Одобрено питомцами</h3>
-            <p>Мы тестируем каждый продукт на своих собственных собаках и кошках.</p>
-        </div>
-        <div class="h-card">
-            <div class="h-icon">📦</div>
-            <h3>Бережная упаковка</h3>
-            <p>Упаковываем так, чтобы даже самое хрупкое лакомство доехало целым.</p>
-        </div>
-        <div class="h-card">
-            <div class="h-icon">🤝</div>
-            <h3>Всегда на связи</h3>
-            <p>Наши менеджеры помогут подобрать размер или подскажут состав.</p>
-        </div>
+    <div class="products-grid">
+        @if (ViewBag.PopularProducts != null)
+        {
+            foreach (var product in ViewBag.PopularProducts as List<Zoomarket.Models.Product>)
+            {
+                <partial name="_ProductCard" model="product" />
+            }
+        }
+        else
+        {
+            <p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1;">Товары скоро появятся!</p>
+        }
     </div>
 </section>
 
-<!-- 3. КРУПНЫЙ ПРИЗЫВ (CTA) -->
-<section class="cta-human">
-    <div class="cta-inner">
-        <h2>Побалуйте своего любимца сегодня</h2>
-        <p>Скидка 10% на первый заказ по промокоду <strong>WELCOME</strong></p>
-        <a asp-controller="Home" asp-action="Contacts" class="btn-outline">Связаться с нами</a>
+<!-- 3. АКЦИИ И СПЕЦПРЕДЛОЖЕНИЯ -->
+@{
+    var mainPromo = ViewBag.MainPromo as Zoomarket.Models.Promotion;
+}
+@if (mainPromo != null)
+{
+    <section class="promo-highlight-section">
+        <div class="section-container">
+            <div class="promo-highlight">
+                <!-- Левая часть: Текст -->
+                <div class="promo-highlight-content">
+                    <span class="promo-highlight-label"><i class="fa-solid fa-fire"></i> Горячее предложение</span>
+                    <h2>@mainPromo.Title</h2>
+                    <p>@mainPromo.Description</p>
+                    <a asp-controller="Promotions" asp-action="Index" class="btn-primary">Смотреть все акции</a>
+                </div>
+
+                <!-- Правая часть: Картинка -->
+                @if (!string.IsNullOrEmpty(mainPromo.ImageUrl))
+                {
+                    <div class="promo-highlight-image" style="background-image: url('@mainPromo.ImageUrl');"></div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- 4. ОТЗЫВЫ КЛИЕНТОВ -->
+<section class="section-container">
+    <div class="section-header">
+        <h2>Отзывы наших клиентов</h2>
+        <a asp-controller="Reviews" asp-action="Index" class="link-all">Все отзывы <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="reviews-grid">
+        @if (ViewBag.LatestReviews != null)
+        {
+            foreach (var review in ViewBag.LatestReviews as List<Zoomarket.Models.Review>)
+            {
+                <div class="review-card">
+                    <div class="review-author">
+                        <div class="author-avatar">@review.AuthorName.Substring(0, 1).ToUpper()</div>
+                        <span>@review.AuthorName</span>
+                    </div>
+                    <p class="review-text">"@review.Text"</p>
+                    <div class="review-stars">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= review.Rating)
+                            {
+                                <i class="fa-solid fa-star"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-regular fa-star"></i>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p style="text-align: center; color: var(--text-muted); grid-column: 1 / -1;">Пока нет отзывов. Будьте первым!</p>
+        }
     </div>
 </section>
+
+<!-- 5. КОНТАКТЫ И ФОРМА -->
+<section class="contact-section">
+    <div class="section-container contact-wrapper">
+        <div class="contact-text">
+            <h2>Остались вопросы?</h2>
+            <p>Оставьте свой номер, и наши менеджеры помогут подобрать корм, игрушки или аксессуары для вашего любимца.</p>
+            <ul class="contact-list">
+                <li><i class="fa-solid fa-phone"></i> +7 (999) 123-45-67</li>
+                <li><i class="fa-solid fa-envelope"></i> info@warmpaw.ru</li>
+            </ul>
+        </div>
+        <div class="contact-form-box">
+            <form asp-controller="Lead" asp-action="Create" method="post">
+                <input type="text" name="Name" placeholder="Ваше имя" required>
+
+                <!-- Поле с маской телефона -->
+                <input type="tel" name="Phone" id="phoneMask" placeholder="+7 (___) ___-__-__" maxlength="18" required>
+
+                <input type="hidden" name="Message" value="Заявка с главной страницы">
+                <button type="submit" class="btn-primary">Жду звонка</button>
+            </form>
+        </div>
+    </div>
+</section>
+@section Scripts {
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const phoneInput = document.getElementById('phoneMask');
+
+        if (phoneInput) {
+            // Устанавливаем начальное значение
+            phoneInput.value = '+7 (';
+
+            phoneInput.addEventListener('input', function (e) {
+                // Удаляем всё, кроме цифр
+                let digits = this.value.replace(/\D/g, '');
+
+                // Если первая цифра 8, меняем на 7
+                if (digits.startsWith('8')) {
+                    digits = '7' + digits.slice(1);
+                }
+
+                // Если не начинается с 7, добавляем 7
+                if (!digits.startsWith('7')) {
+                    digits = '7' + digits;
+                }
+
+                // Форматируем
+                let formatted = '+7 ';
+                if (digits.length > 1) {
+                    formatted += '(' + digits.substring(1, 4);
+                }
+                if (digits.length >= 5) {
+                    formatted += ') ' + digits.substring(4, 7);
+                }
+                if (digits.length >= 8) {
+                    formatted += '-' + digits.substring(7, 9);
+                }
+                if (digits.length >= 10) {
+                    formatted += '-' + digits.substring(9, 11);
+                }
+
+                this.value = formatted;
+            });
+
+            // Удаление символов при backspace
+            phoneInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Backspace' && this.value.length <= 3) {
+                    this.value = '+7 (';
+                    e.preventDefault();
+                }
+            });
+        }
+    });
+    </script>
+}

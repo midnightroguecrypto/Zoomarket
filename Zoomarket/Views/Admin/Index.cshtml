@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Админ-панель";
+    bool isAdmin = User.IsInRole("Admin");
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+<div class="admin-container">
+    <div class="admin-header">
+        <h1>Панель управления</h1>
+        <p>Добро пожаловать, @User.Identity.Name (@(isAdmin ? "Администратор" : "Менеджер"))</p>
+    </div>
+
+    <div class="admin-cards">
+        <!-- ЗАКАЗЫ (Доступно всем) -->
+        <a asp-action="Orders" class="admin-card">
+            <div class="admin-card-icon" style="background: #fff3e0; color: #ff8c00;">
+                <i class="fa-solid fa-truck"></i>
+            </div>
+            <h3>Заказы</h3>
+            <p>@ViewBag.OrdersCount</p>
+            <span class="admin-link">Просмотр <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+
+        <!-- ОТЗЫВЫ (Доступно всем) -->
+        <a asp-action="Reviews" class="admin-card">
+            <div class="admin-card-icon" style="background: #f3e5f5; color: #9c27b0;">
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <h3>Отзывы</h3>
+            <p>@ViewBag.ReviewsCount</p>
+            <span class="admin-link">Просмотр <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a asp-action="Leads" class="admin-card">
+            <div class="admin-card-icon" style="background: #e3f2fd; color: #1976d2;">
+                <i class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            <h3>Заявки</h3>
+            <p>@ViewBag.LeadsCount</p>
+            <span class="admin-link">Просмотр <i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <!-- ДАЛЬШЕ ТОЛЬКО ДЛЯ АДМИНА -->
+        @if (isAdmin)
+        {
+            <a asp-action="Products" class="admin-card">
+                <div class="admin-card-icon" style="background: #e8f0ea; color: var(--primary-color);">
+                    <i class="fa-solid fa-box"></i>
+                </div>
+                <h3>Товары</h3>
+                <p>@ViewBag.ProductsCount</p>
+                <span class="admin-link">Управлять <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a asp-action="Brands" class="admin-card">
+                <div class="admin-card-icon" style="background: #fce4ec; color: #e91e63;">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <h3>Бренды</h3>
+                <p>@ViewBag.BrandsCount</p>
+                <span class="admin-link">Управлять <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a asp-action="Promotions" class="admin-card">
+                <div class="admin-card-icon" style="background: #fff8e1; color: #ffb300;">
+                    <i class="fa-solid fa-tags"></i>
+                </div>
+                <h3>Акции</h3>
+                <p>@ViewBag.PromotionsCount</p>
+                <span class="admin-link">Управлять <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a asp-action="Users" class="admin-card">
+                <div class="admin-card-icon" style="background: #e0f2f1; color: #009688;">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <h3>Пользователи</h3>
+                <p>@ViewBag.UsersCount</p>
+                <span class="admin-link">Управлять <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+        }
+    </div>
+
+    <!-- БЫСТРЫЕ ДЕЙСТВИЯ -->
+    <div class="admin-info">
+        <h2>Быстрые действия</h2>
+        <div class="quick-actions">
+            @if (isAdmin)
+            {
+                <a asp-action="EditProduct" class="btn-primary"><i class="fa-solid fa-plus"></i> Добавить товар</a>
+            }
+            <a asp-action="Orders" class="btn-outline"><i class="fa-solid fa-list"></i> Все заказы</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Zoomarket.Models.Promotion>
+@{
+    ViewData["Title"] = "Управление акциями";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+<div class="admin-container">
+    <a asp-action="Index" class="btn-back-admin">
+        <i class="fa-solid fa-arrow-left"></i> Назад в админку
+    </a>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Акции</h1>
+        <button class="btn-primary" onclick="openPromoModal(0, '', '', '', '', 0)"><i class="fa-solid fa-plus"></i> Добавить акцию</button>
+    </div>
+
+    @if (TempData["AdminMessage"] != null)
+    {
+        <div class="profile-alert success" style="margin-bottom: 20px; padding: 15px; background: #d4edda; color: #155724; border-radius: 8px;">@TempData["AdminMessage"]</div>
+    }
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Баннер</th>
+                <th>Название</th>
+                <th>Скидка</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var promo in Model)
+            {
+                <tr>
+                    <td><img src="@promo.ImageUrl" style="width: 80px; height: 50px; object-fit: cover; border-radius: 8px;"></td>
+                    <td>@promo.Title</td>
+                    <td>@promo.DiscountText</td>
+                    <td style="display: flex; gap: 10px;">
+                        <button class="btn-primary" style="padding: 5px 10px; font-size: 0.85rem;"
+                                onclick="openPromoModal(@promo.Id, '@promo.Title', '@promo.Description', '@promo.ImageUrl', '@(promo.EndDate?.ToString("yyyy-MM-dd") ?? "")', @promo.DiscountPercent)">
+                            Изменить
+                        </button>
+                        <form asp-action="DeletePromotion" asp-route-id="@promo.Id" method="post" onsubmit="return confirm('Удалить акцию?');">
+                            <button type="submit" class="btn-danger-admin" style="padding: 5px 10px; font-size: 0.85rem;">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="custom-modal-overlay" id="promoModal" style="display: none;">
+    <div class="custom-modal" style="max-width: 500px; text-align: left;">
+        <h3 id="promoModalTitle">Добавить акцию</h3>
+        <form asp-action="SavePromotion" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="Id" id="promoId" value="0" />
+            <input type="hidden" name="ImageUrl" id="promoImageUrl" value="" />
+            <div class="form-group">
+                <label>Название акции</label>
+                <input name="Title" id="promoTitle" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea name="Description" id="promoDesc" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="form-row">
+              
+                <div class="form-group" style="flex: 1;">
+                    <label>Процент скидки (%)</label>
+                    <input name="DiscountPercent" id="promoPercent" class="form-control" type="number" min="0" max="100" placeholder="20" required />
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Дата окончания</label>
+                    <input name="EndDate" id="promoEndDate" class="form-control" type="date" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Баннер</label>
+                <input type="file" name="imageFile" class="form-control" accept="image/*" />
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" onclick="closeModal('promoModal')" class="btn-outline" style="flex: 1;">Отмена</button>
+                <button type="submit" class="btn-primary" style="flex: 1;">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openPromoModal(id, title, desc,  imgUrl, endDate, percent) {
+            document.getElementById('promoModalTitle').innerText = id === 0 ? 'Добавить акцию' : 'Редактировать акцию';
+            document.getElementById('promoId').value = id;
+            document.getElementById('promoTitle').value = title;
+            document.getElementById('promoDesc').value = desc;
+            document.getElementById('promoImageUrl').value = imgUrl;
+            document.getElementById('promoEndDate').value = endDate;
+            document.getElementById('promoPercent').value = percent || 0; 
+            document.getElementById('promoModal').style.display = 'flex';
+        }
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+    </script>
+}

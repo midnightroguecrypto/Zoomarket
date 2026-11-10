@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Zoomarket.Models.Lead>
+@{
+    ViewData["Title"] = "Заявки";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+<div class="admin-container">
+    <a asp-action="Index" class="btn-back-admin">
+        <i class="fa-solid fa-arrow-left"></i> Назад в админку
+    </a>
+    <h1>Заявки с сайта</h1>
+
+    @if (TempData["AdminMessage"] != null)
+    {
+        <div class="profile-alert success" style="margin-bottom: 20px; padding: 15px; background: #d4edda; color: #155724; border-radius: 8px;">
+            @TempData["AdminMessage"]
+        </div>
+    }
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Имя</th>
+                <th>Контакты</th>
+                <th>Сообщение</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lead in Model)
+            {
+                <tr>
+                    <td>@lead.DateCreated.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@lead.Name</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(lead.Phone))
+                        {
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+                                <i class="fa-solid fa-phone" style="color: var(--primary-color);"></i>
+                                <span>@lead.Phone</span>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(lead.Email))
+                        {
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-envelope" style="color: var(--primary-color);"></i>
+                                <span>@lead.Email</span>
+                            </div>
+                        }
+                    </td>
+                    <td>@lead.Message</td>
+                    <td>
+                        <form asp-action="DeleteLead" asp-route-id="@lead.Id" method="post" onsubmit="return confirm('Удалить заявку?');">
+                            <button type="submit" class="btn-danger-admin">
+                                <i class="fa-solid fa-trash"></i> Удалить
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

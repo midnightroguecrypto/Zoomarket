@@ -1,0 +1,243 @@
+﻿/* =========================================
+   СТРАНИЦА КОРЗИНЫ
+   ========================================= */
+.cart-container {
+    max-width: 1200px;
+    margin: 40px auto 80px;
+    padding: 0 20px;
+}
+
+/* --- ПУСТАЯ КОРЗИНА --- */
+.empty-cart {
+    text-align: center;
+    padding: 60px 20px;
+    border-radius: 20px;
+}
+
+.empty-cart-icon {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+    /* Стили для картинки */
+    .empty-cart-icon img {
+        max-width: 180px; /* Размер картинки */
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 10px 15px rgba(93, 64, 55, 0.15)); /* Легкая тень */
+        transition: transform 0.3s ease;
+    }
+
+/* Анимация при наведении на блок */
+.empty-cart:hover .empty-cart-icon img {
+    transform: translateY(-8px); /* Котик подпрыгивает */
+}
+
+.empty-cart h2 {
+    margin: 10px 0;
+    color: var(--secondary-color);
+    font-size: 2rem;
+}
+
+.empty-cart p {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.empty-cart .btn-primary {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+
+/* --- СПИСОК ТОВАРОВ --- */
+.cart-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.cart-items {
+    flex: 1;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+
+    .cart-item img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+.cart-item-info {
+    flex: 1;
+}
+
+    .cart-item-info h3 {
+        font-size: 1.1rem;
+        color: var(--text-main);
+        margin-bottom: 5px;
+    }
+
+.cart-item-price {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Управление количеством */
+.cart-quantity {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.qty-btn {
+    background: transparent;
+    border: none;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: background 0.2s;
+}
+
+    .qty-btn:hover {
+        background: #e0dcd3;
+    }
+
+.qty-value {
+    width: 40px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.cart-item-total {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--secondary-color);
+    width: 100px;
+    text-align: right;
+}
+
+.btn-remove {
+    background: transparent;
+    border: none;
+    color: #dc3545;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+    .btn-remove:hover {
+        transform: scale(1.2);
+    }
+
+/* --- ПАНЕЛЬ ИТОГОВ --- */
+.cart-summary {
+    width: 320px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 100px;
+}
+
+    .cart-summary h3 {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: var(--text-muted);
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border-color);
+    font-size: 1.2rem;
+}
+
+    .summary-total strong {
+        font-size: 1.6rem;
+        color: var(--secondary-color);
+    }
+
+/* --- АДАПТИВНОСТЬ --- */
+@media (max-width: 992px) {
+    .cart-layout {
+        flex-direction: column;
+    }
+
+    .cart-summary {
+        width: 100%;
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    .cart-item {
+        flex-wrap: wrap;
+    }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+        }
+
+    .cart-item-info {
+        min-width: 100%;
+        order: 1;
+    }
+
+    .cart-quantity {
+        order: 2;
+    }
+
+    .cart-item-total {
+        order: 3;
+        width: auto;
+    }
+
+    .btn-remove {
+        order: 4;
+        margin-left: auto;
+    }
+}
