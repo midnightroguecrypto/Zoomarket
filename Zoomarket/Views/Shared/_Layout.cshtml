@@ -16,26 +16,24 @@
 </head>
 <body>
 
-    <!-- 1. ПОДКЛЮЧАЕМ ШАПКУ (из файла _Header.cshtml) -->
+
     <partial name="_Header" />
 
-    <!-- 2. ОСНОВНОЙ КОНТЕНТ СТРАНИЦЫ -->
-    <!-- (убрали стандартный container, чтобы наш дизайн был на всю ширину экрана) -->
+
     <main class="main-content">
         @RenderBody()
     </main>
 
-    <!-- 3. ПОДКЛЮЧАЕМ ПОДВАЛ (из файла _Footer.cshtml) -->
+
     <partial name="_Footer" />
 
-    <!-- Стандартные скрипты Visual Studio -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/slider.js" asp-append-version="true"></script>
 
 
-    <!-- Блок для скриптов конкретной страницы -->
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -63,7 +63,6 @@
     </table>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО ТОВАРА -->
 <div class="custom-modal-overlay" id="productModal" style="display: none;">
     <div class="custom-modal" style="max-width: 600px; text-align: left;">
         <h3 id="productModalTitle">Добавить товар</h3>
@@ -141,7 +140,6 @@
 
 @section Scripts {
     <script>
-        // 1. Функция для заполнения модального окна
         function openProductModal(id, name, desc, price, oldPrice, imageUrl, brand) {
             document.getElementById('productModalTitle').innerText = id === 0 ? 'Добавить товар' : 'Редактировать товар';
             document.getElementById('prodId').value = id;
@@ -154,7 +152,6 @@
             document.getElementById('productModal').style.display = 'flex';
         }
 
-        // 2. Новая функция, которая вызывается из кнопки "Изменить"
         function openProductModalFromButton(btn) {
             const id = btn.getAttribute('data-id');
             const name = btn.getAttribute('data-name');
@@ -167,7 +164,6 @@
             openProductModal(id, name, desc, price, oldPrice, imageUrl, brand);
         }
 
-        // 3. Закрытие модалки
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
         }

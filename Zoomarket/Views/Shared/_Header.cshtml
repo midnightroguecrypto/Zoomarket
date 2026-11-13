@@ -1,20 +1,23 @@
 ﻿<header class="site-header">
     <div class="header-container">
-        <!-- Логотип -->
+       
         <a asp-controller="Home" asp-action="Index" class="logo" style="display: flex; align-items: center; gap: 15px; text-decoration: none;">
-
-            <!-- Картинка только с животными -->
             <img src="~/img/logo.png" alt="WarmPaw" style="height: 45px; width: auto; object-fit: contain;" />
-
-            <!-- Текстовая часть (название + слоган) -->
             <div style="display: flex; flex-direction: column; line-height: 1.1; text-align: left;">
                 <span style="color: #ffffff; font-weight: 800; font-size: 1.5rem; letter-spacing: 0.5px;">WarmPaw</span>
                 <span style="color: rgb(163, 201, 168); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.3px; margin-top: 2px;">Тепло лап в каждом заказе</span>
             </div>
         </a>
 
-        <!-- Навигация -->
-        <nav class="main-nav">
+        
+        <button class="burger-menu" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        
+        <nav class="main-nav" id="mobileNav">
             <a asp-controller="Home" asp-action="About">О магазине</a>
             <a asp-controller="Catalog" asp-action="Index">Каталог</a>
             <a asp-controller="Promotions" asp-action="Index">Акции</a>
@@ -24,7 +27,7 @@
             <a asp-controller="Home" asp-action="Contacts">Контакты</a>
         </nav>
 
-        <!-- Действия -->
+        
         <div class="header-actions">
             @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
             {
@@ -34,24 +37,19 @@
             }
             @if (User.Identity != null && User.Identity.IsAuthenticated)
             {
-                
                 <a asp-controller="Profile" asp-action="Index" class="action-icon" title="Личный кабинет">
-                    <i class="fa-solid fa-user"></i> 
+                    <i class="fa-solid fa-user"></i>
                 </a>
             }
             else
             {
-                
                 <a asp-controller="Account" asp-action="Login" class="action-icon" title="Войти">
-                    <i class="fa-solid fa-right-to-bracket"></i> 
+                    <i class="fa-solid fa-right-to-bracket"></i>
                 </a>
             }
-
-           
             <a asp-controller="Cart" asp-action="Index" class="action-icon" title="Корзина">
                 <i class="fa-solid fa-cart-shopping"></i>
             </a>
         </div>
-
     </div>
 </header>

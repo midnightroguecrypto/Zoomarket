@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
 }
 
-<!-- Креативный заголовок -->
 <section class="profile-hero">
     <div class="hero-content">
         <h1>Личный кабинет</h1>
@@ -21,7 +20,6 @@
     </div>
 </section>
 
-<!-- Уведомление -->
 @if (TempData["ProfileMessage"] != null)
 {
     <div class="profile-alert @TempData["ProfileStatus"]" style="max-width: 1200px; margin: 20px auto; padding: 15px 20px; border-radius: 12px; text-align: center;">
@@ -30,10 +28,8 @@
 }
 
 <div class="profile-container">
-    <!-- Боковая панель (partial) -->
     <partial name="_ProfileSidebar" />
 
-    <!-- Основной контент: Заказы -->
     <div class="profile-content">
         <h2>История заказов</h2>
 
@@ -95,7 +91,6 @@
     </div>
 </div>
 
-<!-- Модальное окно отмены заказа -->
 <div class="custom-modal-overlay" id="cancelModal" style="display: none;">
     <div class="custom-modal">
         <div class="modal-icon" style="color: #dc3545;">

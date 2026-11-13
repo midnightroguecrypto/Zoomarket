@@ -17,7 +17,6 @@ namespace Zoomarket.Controllers
             _userManager = userManager;
         }
 
-        // Список всех отзывов (доступен всем)
         public async Task<IActionResult> Index()
         {
             var reviews = await _context.Reviews
@@ -27,7 +26,7 @@ namespace Zoomarket.Controllers
             return View(reviews);
         }
 
-        // Форма добавления отзыва (только для авторизованных)
+ 
         [Authorize]
         [HttpGet]
         public IActionResult Create()
@@ -35,7 +34,7 @@ namespace Zoomarket.Controllers
             return View();
         }
 
-        // Обработка отправки отзыва
+  
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -46,7 +45,7 @@ namespace Zoomarket.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null) return Challenge();
 
-                // Проверка лимита
+              
                 var oneDayAgo = DateTime.UtcNow.AddDays(-1);
                 var reviewsToday = await _context.Reviews
                     .Where(r => r.UserId == user.Id && r.DateCreated >= oneDayAgo)

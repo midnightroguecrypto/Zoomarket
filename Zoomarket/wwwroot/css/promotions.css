@@ -109,7 +109,7 @@
     background: #e8f0ea;
 }
 
-/* СТИЛИ САМОГО СЛАЙДА (ВОТ ИХ НЕ ХВАТАЛО) */
+
 .promo-slide-banner {
     position: absolute;
     top: 0;
@@ -233,7 +233,7 @@
     background: linear-gradient(135deg, #a3c9a8 0%, #4a7c59 100%);
 }
 
-/* Декоративные круги */
+
 .decor-circle {
     position: absolute;
     border-radius: 50%;
@@ -258,7 +258,7 @@
 }
 
 /* =========================================
-   4. КНОПКИ И ТОЧКИ (ВЫНЕСЕНЫ)
+   4. КНОПКИ И ТОЧКИ 
    ========================================= */
 .promo-btn {
     position: absolute;

@@ -11,17 +11,13 @@ namespace Zoomarket
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // 1. Добавляем контроллеры и представления
             builder.Services.AddControllersWithViews();
 
-            // 2. Подключаем базу данных (берем строку из appsettings.json)
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // 3. Настраиваем Identity (Пользователи и Роли)
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
-                // Ослабляем требования к паролю для удобства тестирования
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
@@ -29,10 +25,9 @@ namespace Zoomarket
                 options.Password.RequiredLength = 6;
                 options.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<AppDbContext>() // Говорим Identity использовать нашу БД
+            .AddEntityFrameworkStores<AppDbContext>() 
             .AddDefaultTokenProviders();
 
-            // 4. Настраиваем куки (чтобы система помнила, кто вошел)
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "WarmPaw.Auth";
@@ -65,12 +60,10 @@ namespace Zoomarket
 
             app.UseHttpsRedirection();
 
-            // ВАЖНО: Подключаем статические файлы (CSS, картинки)
             app.UseStaticFiles();
 
             app.UseRouting();
 
-            // ВАЖНО: Аутентификация должна идти ДО Авторизации
             app.UseAuthentication();
             app.UseAuthorization();
 

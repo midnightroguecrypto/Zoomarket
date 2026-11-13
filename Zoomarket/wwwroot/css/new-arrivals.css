@@ -20,7 +20,7 @@
         color: var(--text-muted);
     }
 
-/* Сетка товаров */
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -30,7 +30,6 @@
     padding: 0 20px;
 }
 
-/* Карточка */
 .product-card {
     background: var(--card-bg);
     border-radius: 16px;
@@ -59,7 +58,7 @@
         object-fit: cover;
     }
 
-/* Инфо */
+
 .product-info {
     padding: 20px;
     display: flex;
@@ -140,13 +139,13 @@
     border-radius: 0 0 20px 20px;
 }
 
-/* Текстовая часть (справа) */
+
 .hero-content {
     position: relative;
     z-index: 2;
     text-align: left;
     max-width: 500px;
-    order: 2; /* Текст справа */
+    order: 2; 
 }
 
     .hero-content h1 {
@@ -162,11 +161,11 @@
         line-height: 1.5;
     }
 
-/* Иллюстрация (слева) */
+
 .hero-image {
     position: relative;
     z-index: 2;
-    order: 1; /* Картинка слева */
+    order: 1; 
 }
 
     .hero-image img {
@@ -176,7 +175,7 @@
         animation: float 4s ease-in-out infinite;
     }
 
-/* Декоративные лапки (цвет под стать фону) */
+
 .hero-decor {
     position: absolute;
     color: rgba(0, 150, 136, 0.1);
@@ -197,7 +196,7 @@
     transform: rotate(15deg);
 }
 
-/* Анимация парения */
+
 @keyframes float {
     0% {
         transform: translateY(0px);

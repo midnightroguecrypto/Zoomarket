@@ -26,7 +26,6 @@
     else
     {
         <div class="cart-layout">
-            <!-- Список товаров -->
             <div class="cart-items">
                 @foreach (var item in Model)
                 {
@@ -38,7 +37,6 @@
                             <p class="cart-item-price">@item.Product?.Price.ToString("N0") ₽</p>
                         </div>
 
-                        <!-- Управление количеством -->
                         <div class="cart-quantity">
                             <form asp-action="UpdateQuantity" method="post" style="display:flex;">
                                 <input type="hidden" name="id" value="@item.Id" />
@@ -60,7 +58,6 @@
                 }
             </div>
 
-            <!-- Итоговая панель -->
             <div class="cart-summary">
                 <h3>Итого</h3>
                 <div class="summary-row">
@@ -76,7 +73,6 @@
                     <strong>@Model.Sum(i => (i.Product?.Price ?? 0) * i.Quantity).ToString("N0") ₽</strong>
                 </div>
 
-                <!-- Форма оформления заказа -->
                 <form asp-action="Checkout" method="post" style="margin-top: 20px;">
                     <div class="form-group" style="margin-bottom: 15px;">
                         <label for="address" style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted);">Адрес доставки</label>

@@ -2,7 +2,6 @@
    СТРАНИЦА ПРОФИЛЯ
    ========================================= */
 
-/* --- КРЕАТИВНЫЙ ЗАГОЛОВОК --- */
 .profile-hero {
     position: relative;
     display: flex;
@@ -216,7 +215,7 @@
     font-weight: 700;
 }
 
-    /* Цвета статусов */
+    
     .order-status.вобработке {
         background: #fff3cd;
         color: #856404;

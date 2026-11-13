@@ -6,7 +6,7 @@ using Zoomarket.Models;
 
 namespace Zoomarket.Controllers
 {
-    [Authorize(Roles = "Admin, Manager")] // Доступ в админку для обеих ролей
+    [Authorize(Roles = "Admin, Manager")] 
     public class AdminController : Controller
     {
         private readonly AppDbContext _context;
@@ -20,7 +20,7 @@ namespace Zoomarket.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-        // --- ДАШБОРД (Доступен всем, кто в админке) ---
+        
         public async Task<IActionResult> Index()
         {
             ViewBag.ProductsCount = await _context.Products.CountAsync();
@@ -76,7 +76,7 @@ namespace Zoomarket.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")] // Удалять отзывы может только Админ
+        [Authorize(Roles = "Admin")] 
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteReview(int reviewId)
         {
@@ -92,6 +92,7 @@ namespace Zoomarket.Controllers
 
         // =========================================
         // УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ (Только Админ)
+        // =========================================
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Users()
         {
@@ -102,7 +103,7 @@ namespace Zoomarket.Controllers
                 var roles = await _userManager.GetRolesAsync(user);
                 string roleName = roles.FirstOrDefault() ?? "";
 
-                // Переводим роли на русский
+               
                 string russianRole = roleName switch
                 {
                     "Admin" => "Администратор",
@@ -144,7 +145,7 @@ namespace Zoomarket.Controllers
         {
             ViewBag.Categories = await _context.Categories.ToListAsync();
             ViewBag.Brands = await _context.Brands.ToListAsync();
-            ViewBag.Promotions = await _context.Promotions.ToListAsync(); // <-- ДОБАВИТЬ
+            ViewBag.Promotions = await _context.Promotions.ToListAsync(); 
             var products = await _context.Products.Include(p => p.Category).ToListAsync();
             return View(products);
         }
@@ -156,7 +157,7 @@ namespace Zoomarket.Controllers
         {
             if (ModelState.IsValid)
             {
-                // 1. Сохраняем картинку (если есть)
+                
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "img", "products");
@@ -167,25 +168,25 @@ namespace Zoomarket.Controllers
                     model.ImageUrl = "/img/products/" + uniqueFileName;
                 }
 
-                // 2. Сохраняем или обновляем товар
+                
                 if (model.Id == 0) _context.Products.Add(model);
                 else _context.Products.Update(model);
-                await _context.SaveChangesAsync(); // Сохраняем, чтобы получить ID для нового товара
+                await _context.SaveChangesAsync(); 
 
-                // 3. Привязываем акцию (если выбрана)
+                
                 if (selectedPromoId.HasValue && selectedPromoId > 0)
                 {
                     var promo = await _context.Promotions.FindAsync(selectedPromoId);
                     if (promo != null)
                     {
-                        // Если у акции задан процент, пересчитываем старую цену
+                        
                         if (promo.DiscountPercent > 0)
                         {
-                            model.OldPrice = model.Price; // Старая цена = текущая
-                            model.Price = model.Price * (100 - promo.DiscountPercent) / 100; // Новая цена со скидкой
+                            model.OldPrice = model.Price; 
+                            model.Price = model.Price * (100 - promo.DiscountPercent) / 100; 
                         }
 
-                        // Привязываем товар к акции (если еще не привязан)
+                        
                         if (!model.Promotions.Any(p => p.Id == promo.Id))
                         {
                             model.Promotions.Add(promo);
@@ -289,7 +290,7 @@ namespace Zoomarket.Controllers
         {
             if (ModelState.IsValid)
             {
-                // ... (блок с картинкой остается без изменений) ...
+               
                 if (imageFile != null && imageFile.Length > 0)
                 {
                     string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "img", "promotions");

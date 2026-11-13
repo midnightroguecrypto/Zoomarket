@@ -18,13 +18,13 @@ namespace Zoomarket.Controllers
             _context = context;
         }
 
-        // --- ВКЛАДКА "МОИ ЗАКАЗЫ" ---
+        
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return Challenge();
 
-            // Очистка старых отмененных заказов
+           
             var cutoffDate = DateTime.UtcNow.AddDays(-30);
             var oldCancelledOrders = await _context.Orders
                 .Where(o => o.UserId == user.Id && o.Status == "Отменен" && o.OrderDate < cutoffDate)
@@ -51,7 +51,6 @@ namespace Zoomarket.Controllers
             return View("Index", orders);
         }
 
-        // --- ВКЛАДКА "МОИ ОТЗЫВЫ" ---
         public async Task<IActionResult> Reviews()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -71,7 +70,7 @@ namespace Zoomarket.Controllers
             return View("Reviews", reviews);
         }
 
-        // --- ОТМЕНА ЗАКАЗА ---
+ 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CancelOrder(int orderId, string reason, string? otherReason)
@@ -99,7 +98,6 @@ namespace Zoomarket.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- УДАЛЕНИЕ ОТЗЫВА ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteReview(int reviewId)

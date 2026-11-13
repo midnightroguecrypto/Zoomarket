@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/css/promotions.css" asp-append-version="true" />
 }
 
-<!-- Заголовок -->
+
 <section class="promo-hero">
     <div class="hero-content">
         <h1>Акции и спецпредложения</h1>
@@ -28,7 +28,7 @@
     else
     {
         <div class="promo-slider-container">
-            <!-- Сам блок с баннерами -->
+            
             <div class="promo-slider-banners" id="promo-banner-slider">
                 @{
                     int index = 0;
@@ -36,7 +36,7 @@
                 @foreach (var promo in Model)
                 {
                     <div class="promo-slide-banner @(index == 0 ? "active" : "")">
-                        <!-- Левая часть: Текст -->
+                       
                         <div class="promo-banner-content">
                             <span class="promo-label"><i class="fa-solid fa-fire"></i> Горячее предложение</span>
                             <h2>@promo.Title</h2>
@@ -50,7 +50,7 @@
                             <a asp-controller="Catalog" asp-action="Index" class="btn-primary promo-btn-catalog">В каталог</a>
                         </div>
 
-                        <!-- Правая часть: Картинка -->
+                        <
                         <div class="promo-banner-image-wrapper">
                             @if (!string.IsNullOrEmpty(promo.ImageUrl))
                             {
@@ -60,7 +60,7 @@
                             {
                                 <div class="promo-banner-image placeholder-image"></div>
                             }
-                            <!-- Декоративные элементы на картинке -->
+                            
                             <div class="decor-circle circle-1"></div>
                             <div class="decor-circle circle-2"></div>
                         </div>
@@ -69,11 +69,11 @@
                 }
             </div>
 
-            <!-- Кнопки навигации (ВЫНЕСЕНЫ) -->
+            
             <button class="promo-btn prev" onclick="prevPromo()">&#10094;</button>
             <button class="promo-btn next" onclick="nextPromo()">&#10095;</button>
 
-            <!-- Точки (ВЫНЕСЕНЫ) -->
+            
             <div class="promo-dots">
                 @for (int i = 0; i < Model.Count(); i++)
                 {
@@ -115,7 +115,7 @@
             showPromoSlide(index);
         }
 
-        // Автопрокрутка каждые 5 секунд
+        
         if (promoSlides.length > 1) {
             setInterval(nextPromo, 5000);
         }

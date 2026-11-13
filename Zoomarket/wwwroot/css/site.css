@@ -1,16 +1,16 @@
 /* =========================================
-   1. БАЗОВЫЕ НАСТРОЙКИ И ЦВЕТА (ЭКО-СТИЛЬ)
+   1. БАЗОВЫЕ НАСТРОЙКИ И ЦВЕТА 
    ========================================= */
 :root {
-    --bg-color: #f4f1ea; /* Теплый бежевый фон */
-    --text-main: #2d221c; /* Темно-коричневый текст */
-    --text-muted: #7a6b62; /* Приглушенный коричневый */
-    --primary-color: #4a7c59; /* Шалфейный зеленый */
+    --bg-color: #f4f1ea; 
+    --text-main: #2d221c; 
+    --text-muted: #7a6b62; 
+    --primary-color: #4a7c59; 
     --primary-hover: #3b6347;
-    --secondary-color: #5d4037; /* Древесный коричневый */
+    --secondary-color: #5d4037; 
     --card-bg: #ffffff;
     --border-color: #e0dcd3;
-    --accent-light: rgb(163, 201, 168); /* Светло-зеленый акцент */
+    --accent-light: rgb(163, 201, 168); 
 }
 
 * {
@@ -35,7 +35,7 @@ body {
 }
 
 /* =========================================
-   2. ШАПКА (HEADER) - Закругленная "таблетка"
+   2. ШАПКА
    ========================================= */
 .site-header {
     position: sticky;
@@ -48,7 +48,7 @@ body {
 }
 
 .header-container {
-    background-color: rgba(93, 64, 55, 0.5); /* Полупрозрачный фон */
+    background-color: rgba(93, 64, 55, 0.5); 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -127,7 +127,7 @@ body {
     }
 
 .admin-icon {
-    color: #fbbf24 !important; /* Золотой цвет */
+    color: #fbbf24 !important; 
     transition: transform 0.2s, color 0.2s;
 }
 
@@ -209,7 +209,7 @@ body {
         margin-bottom: 30px;
     }
 
-/* Кнопки слайдера */
+
 .slider-arrow {
     position: absolute;
     top: 50%;
@@ -240,7 +240,7 @@ body {
     right: 20px;
 }
 
-/* Точки внизу */
+
 .slider-dots {
     position: absolute;
     bottom: 20px;
@@ -435,7 +435,7 @@ body {
         color: var(--primary-hover);
     }
 
-/* --- ТОВАРЫ --- */
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -506,7 +506,7 @@ body {
         transform: scale(1.1);
     }
 
-/* --- НОВЫЙ БАННЕР АКЦИИ (СТИЛЬНЫЙ) --- */
+
 .promo-highlight-section {
     padding: 60px 0;
 }
@@ -563,7 +563,6 @@ body {
     border-radius: 0 30px 30px 0;
 }
 
-/* --- ОТЗЫВЫ --- */
 .reviews-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -615,7 +614,7 @@ body {
     color: var(--secondary-color);
 }
 
-/* --- КОНТАКТЫ --- */
+
 .contact-section {
     background: var(--primary-color);
     padding: 80px 0;
@@ -798,7 +797,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* --- НАВИГАЦИЯ В ПОДВАЛЕ В 2 КОЛОНКИ --- */
+
 .footer-nav-grid {
     list-style: none;
     padding: 0;
@@ -819,7 +818,7 @@ body {
             transform: translateX(5px);
         }
 
-/* --- КОНТАКТЫ В ПОДВАЛЕ --- */
+
 .footer-contact p {
     margin-bottom: 12px;
     display: flex;
@@ -877,7 +876,6 @@ body {
 
 @media (max-width: 768px) {
     .header-container {
-        flex-direction: column;
         padding: 20px;
         border-radius: 30px;
     }
@@ -922,7 +920,7 @@ body {
         gap: 30px;
     }
 
-    /* Адаптивность баннера акции */
+   
     .promo-highlight {
         flex-direction: column;
     }
@@ -959,7 +957,7 @@ body {
         gap: 30px;
     }
 
-    /* Отключаем фиксацию фона на мобильных (если используется) */
+ 
     body {
         background-attachment: scroll;
     }
@@ -967,4 +965,83 @@ body {
 .contact-form-box input#phoneMask {
     font-family: 'Nunito', sans-serif;
     letter-spacing: 0.5px;
+}
+
+/* =========================================
+   БУРГЕР-МЕНЮ ДЛЯ ТЕЛЕФОНОВ
+   ========================================= */
+
+
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+    .burger-menu span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #f4f1ea;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+   
+    .burger-menu.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .burger-menu.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .burger-menu.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+@media (max-width: 992px) {
+    .burger-menu {
+        display: flex;
+    }
+
+
+    .main-nav {
+        position: absolute;
+        top: 83%;
+        left: 0px;
+        width: 100%;
+        background-color: rgba(93, 64, 55, 0.9);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.4s ease;
+    }
+
+      
+        .main-nav.active {
+            max-height: 500px; 
+            opacity: 1;
+            padding: 20px 0;
+        }
+
+        .main-nav a {
+            padding: 12px 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.1rem;
+        }
 }

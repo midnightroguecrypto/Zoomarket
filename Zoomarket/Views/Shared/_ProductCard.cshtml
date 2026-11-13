@@ -1,12 +1,12 @@
 ﻿@model Zoomarket.Models.Product
 @{
-    // Проверяем, есть ли у товара акция и скидка
+    
     var activePromo = Model.Promotions?.FirstOrDefault();
     var hasDiscount = Model.OldPrice.HasValue && Model.OldPrice > Model.Price;
 }
 
 <div class="product-card">
-    <!-- Плашки остаются сверху и не являются ссылками -->
+    
     @if (activePromo != null && hasDiscount)
     {
         <span class="promo-card-badge" title="@activePromo.Title">
@@ -19,7 +19,7 @@
         <span class="new-card-badge">Новинка</span>
     }
 
-    <!-- Ссылка на весь блок с картинкой (правильный способ) -->
+    
     <a asp-controller="Catalog" asp-action="Details" asp-route-id="@Model.Id" class="product-link-wrapper">
         <div class="product-image-wrapper">
             @if (!string.IsNullOrEmpty(Model.ImageUrl))
@@ -36,7 +36,7 @@
     <div class="product-info">
         <span class="product-category">@Model.Category?.Name</span>
 
-        <!-- Ссылка на заголовок -->
+        
         <h3>
             <a asp-controller="Catalog" asp-action="Details" asp-route-id="@Model.Id" class="product-title-link">
                 @Model.Name

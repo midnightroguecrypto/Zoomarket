@@ -14,7 +14,6 @@
     </div>
 
     <div class="admin-cards">
-        <!-- ЗАКАЗЫ (Доступно всем) -->
         <a asp-action="Orders" class="admin-card">
             <div class="admin-card-icon" style="background: #fff3e0; color: #ff8c00;">
                 <i class="fa-solid fa-truck"></i>
@@ -24,7 +23,6 @@
             <span class="admin-link">Просмотр <i class="fa-solid fa-arrow-right"></i></span>
         </a>
 
-        <!-- ОТЗЫВЫ (Доступно всем) -->
         <a asp-action="Reviews" class="admin-card">
             <div class="admin-card-icon" style="background: #f3e5f5; color: #9c27b0;">
                 <i class="fa-solid fa-star"></i>
@@ -41,7 +39,6 @@
             <p>@ViewBag.LeadsCount</p>
             <span class="admin-link">Просмотр <i class="fa-solid fa-arrow-right"></i></span>
         </a>
-        <!-- ДАЛЬШЕ ТОЛЬКО ДЛЯ АДМИНА -->
         @if (isAdmin)
         {
             <a asp-action="Products" class="admin-card">
@@ -82,14 +79,9 @@
         }
     </div>
 
-    <!-- БЫСТРЫЕ ДЕЙСТВИЯ -->
     <div class="admin-info">
         <h2>Быстрые действия</h2>
         <div class="quick-actions">
-            @if (isAdmin)
-            {
-                <a asp-action="EditProduct" class="btn-primary"><i class="fa-solid fa-plus"></i> Добавить товар</a>
-            }
             <a asp-action="Orders" class="btn-outline"><i class="fa-solid fa-list"></i> Все заказы</a>
         </div>
     </div>

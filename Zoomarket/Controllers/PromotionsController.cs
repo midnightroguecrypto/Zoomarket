@@ -13,10 +13,10 @@ namespace Zoomarket.Controllers
             _context = context;
         }
 
-        // GET: /Promotions
+  
         public async Task<IActionResult> Index()
         {
-            // Берем все акции и подгружаем связанные с ними товары
+
             var promotions = await _context.Promotions
                 .Include(p => p.Products)
                 .ToListAsync();

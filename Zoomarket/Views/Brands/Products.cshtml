@@ -13,7 +13,6 @@
         <h1>Бренд: @ViewBag.BrandName</h1>
         <p>Все товары от этого производителя</p>
 
-        <!-- Декоративные лапки -->
         <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
         <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
     </div>
@@ -24,7 +23,6 @@
 </section>
 
 <div class="catalog-container" style="display: block; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-    <!-- Навигация по другим брендам -->
     <div class="brands-filter-nav">
         <a asp-action="Index" class="btn-outline">Все бренды</a>
         @foreach (var brand in ViewBag.AllBrands as List<Zoomarket.Models.Brand>)

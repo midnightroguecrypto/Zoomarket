@@ -103,9 +103,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* На всю высоту экрана */
+    min-height: 100vh; 
     padding: 50px 20px;
-    background: #f0f0f0; /* Серый фон */
+    background: #f0f0f0; 
 }
 
 .access-denied-container {

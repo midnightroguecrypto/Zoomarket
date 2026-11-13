@@ -9,7 +9,6 @@
 }
 
 <div class="product-details-container">
-    <!-- Левая часть: Картинка -->
     <div class="product-gallery">
         @if (!string.IsNullOrEmpty(Model.ImageUrl))
         {
@@ -21,7 +20,6 @@
         }
     </div>
 
-    <!-- Правая часть: Информация -->
     <div class="product-info-details">
         <nav class="breadcrumbs">
             <a asp-controller="Home" asp-action="Index">Главная</a> /
@@ -95,7 +93,6 @@
         function scrollRelated(direction) {
             const track = document.getElementById('related-track');
             if (track) {
-                // Прокрутка на ширину одной карточки (260px + 20px отступ)
                 track.scrollBy({ left: direction * 280, behavior: 'smooth' });
             }
         }

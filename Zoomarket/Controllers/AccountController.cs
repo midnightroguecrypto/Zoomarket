@@ -10,21 +10,20 @@ namespace Zoomarket.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AppDbContext _context; // <-- ДОБАВЛЕНО
+        private readonly AppDbContext _context; 
 
         public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            AppDbContext context) // <-- ДОБАВЛЕНО
+            AppDbContext context) 
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-            _context = context; // <-- ДОБАВЛЕНО
+            _context = context; 
         }
 
-        // --- ВХОД (GET) ---
         [HttpGet]
         public IActionResult Login(string? returnUrl = null)
         {
@@ -32,7 +31,6 @@ namespace Zoomarket.Controllers
             return View();
         }
 
-        // --- ВХОД (POST) ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
@@ -51,14 +49,12 @@ namespace Zoomarket.Controllers
             return View(model);
         }
 
-        // --- РЕГИСТРАЦИЯ (GET) ---
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        // --- РЕГИСТРАЦИЯ (POST) ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -70,7 +66,6 @@ namespace Zoomarket.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Сохраняем имя в профиль
                     var profile = new UserProfile
                     {
                         UserId = user.Id,
@@ -79,7 +74,6 @@ namespace Zoomarket.Controllers
                     _context.UserProfiles.Add(profile);
                     await _context.SaveChangesAsync();
 
-                    // Назначаем роль "User"
                     if (!await _roleManager.RoleExistsAsync("User"))
                     {
                         await _roleManager.CreateAsync(new IdentityRole("User"));
@@ -98,7 +92,7 @@ namespace Zoomarket.Controllers
             return View(model);
         }
 
-        // --- ВЫХОД (POST) ---
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()

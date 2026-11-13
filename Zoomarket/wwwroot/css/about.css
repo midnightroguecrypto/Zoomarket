@@ -77,11 +77,10 @@
         box-shadow: 0 8px 20px rgba(93, 64, 55, 0.15);
     }
 .about-list li i {
-    color: var(--primary-color); /* Зеленый цвет */
+    color: var(--primary-color); 
     font-size: 1.2rem;
     margin-right: 10px;
 }
-/* Адаптивность для этой страницы */
 @media (max-width: 768px) {
     .about-content {
         gap: 30px;
@@ -99,13 +98,12 @@
     margin-bottom: 40px;
 }
 
-/* Текстовая часть (справа) */
 .hero-content {
     position: relative;
     z-index: 2;
     text-align: left;
     max-width: 500px;
-    order: 2; /* Текст идет вторым (справа) */
+    order: 2; 
 }
 
     .hero-content h1 {
@@ -121,11 +119,10 @@
         line-height: 1.5;
     }
 
-/* Иллюстрация (слева) */
 .hero-image {
     position: relative;
     z-index: 2;
-    order: 1; /* Картинка идет первой (слева) */
+    order: 1; 
 }
 
     .hero-image img {
@@ -135,7 +132,6 @@
         animation: float 4s ease-in-out infinite;
     }
 
-/* Декоративные лапки */
 .hero-decor {
     position: absolute;
     color: rgba(74, 124, 89, 0.1);
@@ -156,7 +152,6 @@
     transform: rotate(15deg);
 }
 
-/* Анимация парения */
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -181,7 +176,7 @@
 
     .hero-content {
         text-align: center;
-        order: 2; /* Текст все равно остается снизу */
+        order: 2; 
     }
 
         .hero-content h1 {
@@ -189,7 +184,7 @@
         }
 
     .hero-image {
-        order: 1; /* Картинка сверху */
+        order: 1; 
     }
 
         .hero-image img {

@@ -12,7 +12,6 @@
     flex-wrap: wrap;
 }
 
-/* Контентная часть */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -33,7 +32,6 @@
         line-height: 1.5;
     }
 
-/* Иллюстрация */
 .hero-image {
     position: relative;
     z-index: 2;
@@ -46,7 +44,7 @@
         animation: float 4s ease-in-out infinite;
     }
 
-/* Декоративные лапки на фоне */
+
 .hero-decor {
     position: absolute;
     color: rgba(74, 124, 89, 0.1);
@@ -74,7 +72,7 @@
     transform: rotate(45deg);
 }
 
-/* Анимация парения */
+
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -148,7 +146,7 @@
     font-size: 0.95rem;
 }
 
-/* Форма */
+
 .contact-form-wrapper {
     flex: 1.5;
     min-width: 300px;
@@ -251,7 +249,7 @@
     }
 
     .hero-decor {
-        display: none; /* Скрываем лапки на планшетах/телефонах */
+        display: none; 
     }
 }
 

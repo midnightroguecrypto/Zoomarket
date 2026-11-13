@@ -3,9 +3,8 @@
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/catalog.css" asp-append-version="true" /> <!-- ВОТ ЭТА СТРОКА -->
+    <link rel="stylesheet" href="~/css/catalog.css" asp-append-version="true" /> 
 }
-<!-- 1. БОЛЬШОЙ СЛАЙДЕР (Оставляем как было) -->
 <section class="hero-slider">
     <div class="slides-container">
         <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2069&auto=format&fit=crop');">
@@ -39,7 +38,6 @@
     </div>
 </section>
 
-<!-- 2. РЕКОМЕНДУЕМЫЕ ТОВАРЫ (Популярное) -->
 <section class="section-container">
     <div class="section-header">
         <h2>Популярные товары</h2>
@@ -61,7 +59,6 @@
     </div>
 </section>
 
-<!-- 3. АКЦИИ И СПЕЦПРЕДЛОЖЕНИЯ -->
 @{
     var mainPromo = ViewBag.MainPromo as Zoomarket.Models.Promotion;
 }
@@ -70,7 +67,6 @@
     <section class="promo-highlight-section">
         <div class="section-container">
             <div class="promo-highlight">
-                <!-- Левая часть: Текст -->
                 <div class="promo-highlight-content">
                     <span class="promo-highlight-label"><i class="fa-solid fa-fire"></i> Горячее предложение</span>
                     <h2>@mainPromo.Title</h2>
@@ -78,7 +74,6 @@
                     <a asp-controller="Promotions" asp-action="Index" class="btn-primary">Смотреть все акции</a>
                 </div>
 
-                <!-- Правая часть: Картинка -->
                 @if (!string.IsNullOrEmpty(mainPromo.ImageUrl))
                 {
                     <div class="promo-highlight-image" style="background-image: url('@mainPromo.ImageUrl');"></div>
@@ -88,7 +83,6 @@
     </section>
 }
 
-<!-- 4. ОТЗЫВЫ КЛИЕНТОВ -->
 <section class="section-container">
     <div class="section-header">
         <h2>Отзывы наших клиентов</h2>
@@ -129,7 +123,6 @@
     </div>
 </section>
 
-<!-- 5. КОНТАКТЫ И ФОРМА -->
 <section class="contact-section">
     <div class="section-container contact-wrapper">
         <div class="contact-text">
@@ -144,7 +137,6 @@
             <form asp-controller="Lead" asp-action="Create" method="post">
                 <input type="text" name="Name" placeholder="Ваше имя" required>
 
-                <!-- Поле с маской телефона -->
                 <input type="tel" name="Phone" id="phoneMask" placeholder="+7 (___) ___-__-__" maxlength="18" required>
 
                 <input type="hidden" name="Message" value="Заявка с главной страницы">
@@ -159,24 +151,19 @@
         const phoneInput = document.getElementById('phoneMask');
 
         if (phoneInput) {
-            // Устанавливаем начальное значение
             phoneInput.value = '+7 (';
 
             phoneInput.addEventListener('input', function (e) {
-                // Удаляем всё, кроме цифр
                 let digits = this.value.replace(/\D/g, '');
 
-                // Если первая цифра 8, меняем на 7
                 if (digits.startsWith('8')) {
                     digits = '7' + digits.slice(1);
                 }
 
-                // Если не начинается с 7, добавляем 7
                 if (!digits.startsWith('7')) {
                     digits = '7' + digits;
                 }
 
-                // Форматируем
                 let formatted = '+7 ';
                 if (digits.length > 1) {
                     formatted += '(' + digits.substring(1, 4);
@@ -194,7 +181,6 @@
                 this.value = formatted;
             });
 
-            // Удаление символов при backspace
             phoneInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Backspace' && this.value.length <= 3) {
                     this.value = '+7 (';

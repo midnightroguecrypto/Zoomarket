@@ -20,18 +20,18 @@
     justify-content: center;
 }
 
-    /* Стили для картинки */
+    
     .empty-cart-icon img {
-        max-width: 180px; /* Размер картинки */
+        max-width: 180px; 
         height: auto;
         display: block;
-        filter: drop-shadow(0 10px 15px rgba(93, 64, 55, 0.15)); /* Легкая тень */
+        filter: drop-shadow(0 10px 15px rgba(93, 64, 55, 0.15)); 
         transition: transform 0.3s ease;
     }
 
-/* Анимация при наведении на блок */
+
 .empty-cart:hover .empty-cart-icon img {
-    transform: translateY(-8px); /* Котик подпрыгивает */
+    transform: translateY(-8px); 
 }
 
 .empty-cart h2 {
@@ -105,7 +105,7 @@
     font-size: 0.9rem;
 }
 
-/* Управление количеством */
+
 .cart-quantity {
     display: flex;
     align-items: center;

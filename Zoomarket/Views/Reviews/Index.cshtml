@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="~/css/reviews.css" asp-append-version="true" />
 }
 
-<!-- Креативный заголовок -->
 <section class="reviews-hero">
     <div class="hero-image">
         <img src="~/img/free-icon-puffin-8142776.png" alt="Пингвинчик" />
@@ -16,7 +15,7 @@
         <h1>Отзывы наших клиентов</h1>
         <p>Мы гордимся доверием более 5000 владельцев питомцев</p>
 
-        <!-- Декоративные лапки -->
+       
         <div class="hero-decor paw-1"><i class="fa-solid fa-paw"></i></div>
         <div class="hero-decor paw-2"><i class="fa-solid fa-paw"></i></div>
         <div class="hero-decor paw-3"><i class="fa-solid fa-paw"></i></div>
@@ -27,7 +26,6 @@
 <div class="reviews-container">
     <div class="reviews-layout">
 
-        <!-- Левая колонка: Форма добавления отзыва -->
         <div class="review-form-side">
             <div class="review-form-box">
                 <h2>Оставить отзыв</h2>
@@ -41,7 +39,7 @@
                             <input name="AuthorName" class="form-control" placeholder="Иван Иванов" required />
                         </div>
 
-                        <!-- ИНТЕРАКТИВНЫЕ ЗВЕЗДЫ -->
+                        
                         <div class="form-group">
                             <label>Ваша оценка</label>
                             <div class="star-rating">
@@ -78,7 +76,7 @@
             </div>
         </div>
 
-        <!-- Правая колонка: Список отзывов -->
+        
         <div class="reviews-list-side">
             <h2>Что говорят о нас</h2>
 
@@ -150,7 +148,7 @@
             }
         }
 
-        // Автоматическое закрытие через 5 секунд (опционально)
+        
         window.onload = function () {
             var modal = document.getElementById('reviewModal');
             if (modal) {

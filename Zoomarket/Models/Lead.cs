@@ -23,6 +23,6 @@ namespace Zoomarket.Models
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         [Display(Name = "Статус")]
-        public string Status { get; set; } = "Новая"; // Новая, Обработана, Отклонена
+        public string Status { get; set; } = "Новая"; 
     }
 }

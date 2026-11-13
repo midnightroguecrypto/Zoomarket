@@ -1,4 +1,14 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function toggleMenu() {
+    const nav = document.getElementById('mobileNav');
+    const burger = document.querySelector('.burger-menu');
 
-// Write your JavaScript code.
+    nav.classList.toggle('active');
+    burger.classList.toggle('active');
+}
+
+document.querySelectorAll('.main-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.getElementById('mobileNav').classList.remove('active');
+        document.querySelector('.burger-menu').classList.remove('active');
+    });
+});

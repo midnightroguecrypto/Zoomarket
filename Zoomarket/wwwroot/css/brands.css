@@ -1,5 +1,5 @@
 ﻿/* =========================================
-   СТИЛИ ДЛЯ СТРАНИЦЫ БРЕНДОВ (BENTO GRID)
+   СТИЛИ ДЛЯ СТРАНИЦЫ БРЕНДОВ
    ========================================= */
 .brands-container {
     max-width: 1250px;
@@ -7,13 +7,13 @@
     padding: 0 20px;
 }
 
-/* Сетка-мозаика */
+
 .brands-masonry {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 20px;
-    grid-auto-rows: minmax(240px, auto); /* Высота подстраивается под контент */
-    grid-auto-flow: dense; /* Заполняет пустоты */
+    grid-auto-rows: minmax(240px, auto); 
+    grid-auto-flow: dense; 
 }
 
 /* =========================================
@@ -42,16 +42,15 @@
         z-index: 2;
     }
 
-    /* Чередование цветов (каждая четная - зеленоватая) */
+
     .brand-card:nth-child(even) {
         background: linear-gradient(135deg, #f0f7f2 0%, #e2ede5 100%);
     }
 
     /* =========================================
-   ПАТТЕРН РАЗМЕРОВ (ГИБКИЙ)
+   ПАТТЕРН РАЗМЕРОВ 
    ========================================= */
 
-    /* Первая карточка - большая и темная (акцент) */
     .brand-card:nth-child(1) {
         grid-column: span 2;
         background: var(--secondary-color);
@@ -77,24 +76,24 @@
             height: 100px;
         }
 
-    /* Каждая 3-я карточка (3, 6, 9...) - ШИРОКАЯ (на 2 колонки) */
+
     .brand-card:nth-child(3n) {
         grid-column: span 2;
     }
 
-    /* Если последняя карточка не заполняет ряд, растягиваем её на всю ширину */
+
     .brand-card:last-child {
         grid-column: span 3;
     }
 
-        /* Ограничиваем ширину текста в широких карточках, чтобы был "воздух" */
+
         .brand-card:nth-child(1) .brand-info,
         .brand-card:nth-child(3n) .brand-info,
         .brand-card:last-child .brand-info {
             max-width: 60%;
         }
 
-        /* Для последней карточки (на всю ширину) делаем описание в одну строку */
+
         .brand-card:last-child .brand-desc {
             -webkit-line-clamp: 1;
         }
@@ -175,7 +174,6 @@
     .brands-masonry {
         grid-template-columns: repeat(2, 1fr);
     }
-    /* На планшетах широкие карточки занимают всю ширину */
     .brand-card:nth-child(1),
     .brand-card:nth-child(3n),
     .brand-card:last-child {
@@ -193,16 +191,13 @@
         height: auto;
         min-height: 200px;
     }
-        /* Сбрасываем ограничение ширины текста на телефонах */
         .brand-card:nth-child(1) .brand-info,
         .brand-card:nth-child(3n) .brand-info,
         .brand-card:last-child .brand-info {
             max-width: 100%;
         }
 }
-/* =========================================
-   КРЕАТИВНЫЙ ЗАГОЛОВОК СТРАНИЦЫ БРЕНДОВ
-   ========================================= */
+
 .brands-hero {
     position: relative;
     display: flex;
@@ -236,7 +231,7 @@
         line-height: 1.5;
     }
 
-/* Иллюстрация */
+
 .hero-image {
     position: relative;
     z-index: 2;
@@ -249,7 +244,7 @@
         animation: float 4s ease-in-out infinite;
     }
 
-/* Декоративные лапки */
+
 .hero-decor {
     position: absolute;
     color: rgba(63, 81, 181, 0.1);
@@ -270,7 +265,7 @@
     transform: rotate(15deg);
 }
 
-/* Анимация парения */
+
 @keyframes float {
     0% {
         transform: translateY(0px);
@@ -343,7 +338,7 @@
         border-color: var(--primary-color);
     }
 
-/* Кнопка "Все бренды" */
+
 .btn-all-brands {
     padding: 8px 16px;
     background: transparent;

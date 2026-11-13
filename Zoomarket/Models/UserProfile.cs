@@ -11,7 +11,6 @@ namespace Zoomarket.Models
         [Display(Name = "Имя")]
         public string FullName { get; set; } = string.Empty;
 
-        // Связь с пользователем (1:1)
         public string UserId { get; set; } = string.Empty;
         public virtual IdentityUser? User { get; set; }
     }

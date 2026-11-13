@@ -22,10 +22,10 @@ namespace Zoomarket.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["LeadSuccess"] = "Спасибо! Мы свяжемся с вами в ближайшее время.";
-                return RedirectToAction("Thanks"); // Страница благодарности
+                return RedirectToAction("Thanks"); 
             }
 
-            // Если модель невалидна, возвращаем обратно с ошибкой
+            
             TempData["LeadError"] = "Пожалуйста, заполните все поля корректно.";
             return Redirect(Request.Headers["Referer"].ToString());
         }

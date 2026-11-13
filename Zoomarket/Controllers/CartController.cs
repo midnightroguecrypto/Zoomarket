@@ -6,7 +6,7 @@ using Zoomarket.Models;
 
 namespace Zoomarket.Controllers
 {
-    [Authorize] // Корзина доступна только авторизованным пользователям
+    [Authorize] 
     public class CartController : Controller
     {
         private readonly AppDbContext _context;
@@ -18,7 +18,7 @@ namespace Zoomarket.Controllers
             _userManager = userManager;
         }
 
-        // --- ПРОСМОТР КОРЗИНЫ ---
+       
         public async Task<IActionResult> Index()
         {
             var userId = _userManager.GetUserId(User);
@@ -30,7 +30,7 @@ namespace Zoomarket.Controllers
             return View(cartItems);
         }
 
-        // --- ДОБАВЛЕНИЕ В КОРЗИНУ ---
+        
         [HttpPost]
         public async Task<IActionResult> Add(int id, int quantity = 1)
         {
@@ -59,7 +59,7 @@ namespace Zoomarket.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- УДАЛЕНИЕ ИЗ КОРЗИНЫ ---
+     
         [HttpPost]
         public async Task<IActionResult> Remove(int id)
         {
@@ -73,7 +73,7 @@ namespace Zoomarket.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- ОБНОВЛЕНИЕ КОЛИЧЕСТВА (Кнопки + / -) ---
+        
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int id, int quantity)
         {
@@ -94,13 +94,13 @@ namespace Zoomarket.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- ОФОРМЛЕНИЕ ЗАКАЗА ---
+     
         [HttpPost]
         public async Task<IActionResult> Checkout(string address)
         {
             var userId = _userManager.GetUserId(User);
 
-            // 1. Получаем товары из корзины
+     
             var cartItems = await _context.CartItems
                 .Include(c => c.Product)
                 .Where(c => c.UserId == userId)
@@ -108,10 +108,10 @@ namespace Zoomarket.Controllers
 
             if (!cartItems.Any())
             {
-                return RedirectToAction("Index"); // Если корзина пуста, ничего не делаем
+                return RedirectToAction("Index");
             }
 
-            // 2. Создаем заказ
+          
             var order = new Order
             {
                 UserId = userId,
@@ -124,7 +124,7 @@ namespace Zoomarket.Controllers
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            // 3. Переносим товары из корзины в OrderItems
+           
             foreach (var item in cartItems)
             {
                 _context.OrderItems.Add(new OrderItem
@@ -136,15 +136,15 @@ namespace Zoomarket.Controllers
                 });
             }
 
-            // 4. Очищаем корзину
+            
             _context.CartItems.RemoveRange(cartItems);
             await _context.SaveChangesAsync();
 
-            // 5. Перенаправляем на страницу успеха
+            
             return RedirectToAction("Success", new { orderId = order.Id });
         }
 
-        // --- СТРАНИЦА УСПЕШНОГО ЗАКАЗА ---
+        
         public IActionResult Success(int orderId)
         {
             ViewBag.OrderId = orderId;
